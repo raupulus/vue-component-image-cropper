@@ -1,4 +1,5 @@
 <template>
+  <span>
     <v-container fill-height fluid>
         <v-row align="center" 
                justify="center"
@@ -30,7 +31,9 @@
         -->
     </v-container>
 
-    
+    <!-- Modal con los pasos para cambiar imagen -->
+    <v-image-cropper-modal></v-image-cropper-modal>
+  </span>  
 </template>
 
 <script>
@@ -41,7 +44,6 @@
 //import Vue from 'vue'
 import 'vuejs-clipper';
 import axios from 'axios';
-
 
 //import VueAxios from "vue-axios";
 
