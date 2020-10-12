@@ -164,9 +164,17 @@
 //https://timtnleeproject.github.io/vuejs-clipper/#/examples/quick-start
 //https://timtnleeproject.github.io/vuejs-clipper/#/examples/profile-photo
 
+import Vue from 'vue'
 import 'vuejs-clipper';
 import axios from 'axios';
-import VueAxios from "vue-axios";
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+
+// Install BootstrapVue
+Vue.use(BootstrapVue)
+// Optionally install the BootstrapVue icon components plugin
+Vue.use(IconsPlugin)
+
+//import VueAxios from "vue-axios";
 
 export default {
   props: [
@@ -187,7 +195,7 @@ export default {
       msgStep2:
           'Mueve la imagen para centrarla, puedes hacer scroll ' +
           'para aumentar o disminuir su tamaño.',
-      imgURL: '',
+      imgURL: './assets/',
       resultURL: '',
       imgOriginal: this.image,
       originalName: '',
@@ -242,8 +250,8 @@ export default {
        * Cuando no se carga la imagen o es otro tipo de archivo.
        */
       error: function() {
-          let step1 = document.getElementsByClassName('my-clipper-step1')[0];
-          let step2 = document.getElementsByClassName('my-clipper-step2')[0];
+          //let step1 = document.getElementsByClassName('my-clipper-step1')[0];
+          //let step2 = document.getElementsByClassName('my-clipper-step2')[0];
 
           let boxError = document.getElementById('my-cropper-upload-errors');
 
@@ -273,6 +281,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @import '~bootstrap';
+  @import '~bootstrap-vue';
+
     #v-image-clipper {
 
     }
