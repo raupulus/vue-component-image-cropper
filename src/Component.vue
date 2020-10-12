@@ -1,5 +1,26 @@
 <template>
+  <span id="v-image-clipper" class="box-image-clipper">
+    <div>
+        Nuevo diseño
+        <v-avatar
+        color="primary"
+        rounded
+        size="100">
+          <img
+            src="https://cdn.vuetifyjs.com/images/john.jpg"
+            alt="John"
+          />
+        </v-avatar>
+    </div>
+
+
+
+
+
     <b-container fluid id="v-image-clipper">
+        
+
+
         <b-row class="justify-content-center">
             <b-col cols="12">
                 <b-col cols="12" class="user-image text-center">
@@ -157,6 +178,7 @@
             </b-col>
         </b-row>
     </b-container>
+  </span>  
 </template>
 
 <script>
@@ -164,15 +186,9 @@
 //https://timtnleeproject.github.io/vuejs-clipper/#/examples/quick-start
 //https://timtnleeproject.github.io/vuejs-clipper/#/examples/profile-photo
 
-import Vue from 'vue'
+//import Vue from 'vue'
 import 'vuejs-clipper';
 import axios from 'axios';
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-
-// Install BootstrapVue
-Vue.use(BootstrapVue)
-// Optionally install the BootstrapVue icon components plugin
-Vue.use(IconsPlugin)
 
 //import VueAxios from "vue-axios";
 
@@ -281,9 +297,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '~bootstrap';
-  @import '~bootstrap-vue';
-
     #v-image-clipper {
 
     }
