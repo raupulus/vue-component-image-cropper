@@ -25,9 +25,9 @@
             <v-btn
               dark
               text
-              @click="save"
+              @click="closeModal"
             >
-              Guardar
+              Cerrar
             </v-btn>
           </v-toolbar-items>
         </v-toolbar>
@@ -39,7 +39,7 @@
               :complete="e1 > 1"
               step="1"
             >
-              Name of step 1
+              Nombre del paso 1
             </v-stepper-step>
 
             <v-divider></v-divider>
@@ -48,13 +48,13 @@
               :complete="e1 > 2"
               step="2"
             >
-              Name of step 2
+              Nombre del paso 2
             </v-stepper-step>
 
             <v-divider></v-divider>
 
             <v-stepper-step step="3">
-              Name of step 3
+              Nombre del paso 3
             </v-stepper-step>
           </v-stepper-header>
 
@@ -70,11 +70,11 @@
                 color="primary"
                 @click="e1 = 2"
               >
-                Continue
+                Siguiente
               </v-btn>
 
-              <v-btn text>
-                Cancel
+              <v-btn text @click="closeModal">
+                Cerrar
               </v-btn>
             </v-stepper-content>
 
@@ -87,13 +87,17 @@
 
               <v-btn
                 color="primary"
-                @click="e1 = 3"
+                @click="e1 += 1"
               >
-                Continue
+                Siguiente
               </v-btn>
 
-              <v-btn text>
-                Cancel
+              <v-btn text @click="e1 -= 1">
+                Atrás
+              </v-btn>
+
+              <v-btn text @click="closeModal">
+                Cerrar
               </v-btn>
             </v-stepper-content>
 
@@ -106,13 +110,17 @@
 
               <v-btn
                 color="primary"
-                @click="e1 = 1"
+                @click="save"
               >
-                Continue
+                Guardar
               </v-btn>
 
-              <v-btn text>
-                Cancel
+              <v-btn text @click="e1 -= 1">
+                Atrás
+              </v-btn>
+
+              <v-btn text @click="closeModal">
+                Cerrar
               </v-btn>
             </v-stepper-content>
           </v-stepper-items>
@@ -131,29 +139,29 @@
         required: false,
         default: false
       },
-      /*
-      this.notifications,
-      this.sound,
-      this.widgets
-      */
     },
     data () {
       return {
-        //dialogStatus: this.dialog,
-        notifications: false,
-        sound: true,
-        widgets: false,
-        e1: 1, // Paso del menú actual
+        e1: 1, // Almacena el paso del menú actual
       }
     },
     methods: {
+      /**
+       * Lanza el evento al padre con los datos del modal actualizado.
+       */
       eventUpdateData() {
          let data = {dialog: !this.dialog}
          this.$emit('modal_cropper_update_data', data);
       },
+      /**
+       * Cierra el modal.
+       */
       closeModal() {
         this.eventUpdateData();
       },
+      /**
+       * Procesa el guardado de la imagen en el servidor.
+       */
       save() {
         // TODO → Procesar guardado
         this.closeModal();
