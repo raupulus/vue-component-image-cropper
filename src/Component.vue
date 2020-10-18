@@ -4,7 +4,11 @@
         <v-row align="center" 
                justify="center"
                no-gutters>
-            <v-col class="align-center" cols="12">
+            <v-col class="align-center" 
+                   cols="12"
+                   @mouseover="showModalButton = true"
+                   @mouseout="showModalButton = false"
+                   >
                 <v-avatar
                 color="teal"
                 rounded
@@ -13,22 +17,27 @@
                         src="https://cdn.vuetifyjs.com/images/john.jpg"
                         alt="John"
                     />
-                </v-avatar>
 
-                <span class="align-top">
-                    <v-btn class="ml--15 mt-1" 
-                           color="primary"
-                           dark
-                           elevation="3"
-                           x-small
-                           @click="toggleModal">
+                    <v-btn color="primary"
+                          dark
+                          absolute
+                          bottom
+                          center
+                          elevation="3"
+                          small
+                          
+                          @click="toggleModal">
                         <v-icon dark small>
                             mdi-image-edit
                         </v-icon>
-                        Editar
-                    </v-btn>
-                </span>
 
+                        <v-scale-transition>
+                          <span v-show="showModalButton">
+                            Editar
+                          </span>
+                        </v-scale-transition>
+                    </v-btn>
+                </v-avatar>
             </v-col>
         </v-row>
 
@@ -54,7 +63,7 @@
 
 //import Vue from 'vue'
 import 'vuejs-clipper';
-import axios from 'axios';
+//import axios from 'axios';
 
 //import VueAxios from "vue-axios";
 
@@ -83,19 +92,28 @@ export default {
       originalName: '',
       rangeMin: 0,
       rangeMax: 10,
+
+      // Atributos nuevos desde refactorización del componente.
+      showModalButton: false, // Muestra el botón que llevará al modal.
       modal: {
-        dialog: false,
+        dialog: true,  // Indica si muestra el modal abierto.
       }
     }
   },
   methods: {
       toggleModal: function () {
         this.modal.dialog = !this.modal.dialog;
+        
+        console.log('Al abrir modal:');
+        console.log(this.modal);
       },
       onChangeModalCropperData: function (data) {
         this.modal = data;
+        
+        console.log('Al cambiar datos del modal:');
         console.log(this.modal);
       },
+      /*
       getResult: function () {
           console.log('getResult');
           const canvas = this.$refs.clipper.clip();  //call component's clip method
@@ -120,9 +138,12 @@ export default {
           // Cierro el modal
           this.$bvModal.hide('v-modal-avatar-image-crop');
       },
+      */
+
       /**
        * Cuando se carga correctamente la imagen.
        */
+      /*
       load: function() {
           let step1 = document.getElementsByClassName('my-clipper-step1')[0];
           let step2 = document.getElementsByClassName('my-clipper-step2')[0];
@@ -138,9 +159,12 @@ export default {
 
           }
       },
+      */
+
       /**
        * Cuando no se carga la imagen o es otro tipo de archivo.
        */
+      /*
       error: function() {
           //let step1 = document.getElementsByClassName('my-clipper-step1')[0];
           //let step2 = document.getElementsByClassName('my-clipper-step2')[0];
@@ -156,6 +180,7 @@ export default {
           step2.setAttribute('hidden', 'true');
           step1.removeAttribute('hidden');
       }
+      */
   },
  /*
  computed() {

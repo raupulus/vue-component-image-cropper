@@ -117,7 +117,6 @@
          this.$emit('modal_cropper_update_data', data);
       },
       closeModal() {
-        //this.dialog = false;
         this.eventUpdateData();
       },
       save() {
