@@ -6,16 +6,7 @@
       hide-overlay
       transition="dialog-bottom-transition"
     >
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          color="primary"
-          dark
-          v-bind="attrs"
-          v-on="on"
-        >
-          Open Dialog
-        </v-btn>
-      </template>
+      
       
       <v-card>
         <v-toolbar
@@ -25,7 +16,7 @@
           <v-btn
             icon
             dark
-            @click="dialog = false"
+            @click="closeModal"
           >
             <v-icon>mdi-close</v-icon>
           </v-btn>
@@ -35,7 +26,7 @@
             <v-btn
               dark
               text
-              @click="dialog = false"
+              @click="save"
             >
               Save
             </v-btn>
@@ -100,14 +91,40 @@
 
 <script>
   export default {
+    props: {
+      dialog: {
+        type: Boolean,
+        required: false,
+        default: false
+      },
+      /*
+      this.notifications,
+      this.sound,
+      this.widgets
+      */
+    },
     data () {
       return {
-        dialog: false,
+        //dialogStatus: this.dialog,
         notifications: false,
         sound: true,
         widgets: false,
       }
     },
+    methods: {
+      eventUpdateData() {
+         let data = {dialog: !this.dialog}
+         this.$emit('modal_cropper_update_data', data);
+      },
+      closeModal() {
+        //this.dialog = false;
+        this.eventUpdateData();
+      },
+      save() {
+        // TODO → Procesar guardado
+        this.closeModal();
+      }
+   },
   }
 </script>
 
@@ -118,5 +135,9 @@
 
 .align-top {
     vertical-align: top;
+}
+
+.v-dialog__container {
+  display: block;
 }
 </style>

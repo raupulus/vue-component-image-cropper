@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <v-app>
     <v-container fill-height fluid>
         <v-row align="center" 
                justify="center"
@@ -16,14 +16,21 @@
                 </v-avatar>
 
                 <span class="align-top">
-                    <v-icon color="green darken-2">
-                      mdi-image-edit
-                    </v-icon>
-                    Edit
+                    <v-btn class="ml--15 mt-1" 
+                           color="primary"
+                           dark
+                           elevation="3"
+                           x-small
+                           @click="toggleModal">
+                        <v-icon dark small>
+                            mdi-image-edit
+                        </v-icon>
+                        Editar
+                    </v-btn>
                 </span>
 
             </v-col>
-        </v-row>    
+        </v-row>
 
         <!--
             Añadir bloque de paginación paso a paso
@@ -32,8 +39,12 @@
     </v-container>
 
     <!-- Modal con los pasos para cambiar imagen -->
-    <v-image-cropper-modal></v-image-cropper-modal>
-  </span>  
+    <v-image-cropper-modal 
+      :dialog="this.modal.dialog"
+      v-on:modal_cropper_update_data="onChangeModalCropperData"
+      ></v-image-cropper-modal>
+
+  </v-app>
 </template>
 
 <script>
@@ -57,7 +68,7 @@ export default {
     //
   },
   mounted() {
-   console.log('Component mounted');
+    console.log('Component mounted');
   },
   data () {
     return {
@@ -72,9 +83,19 @@ export default {
       originalName: '',
       rangeMin: 0,
       rangeMax: 10,
+      modal: {
+        dialog: false,
+      }
     }
   },
   methods: {
+      toggleModal: function () {
+        this.modal.dialog = !this.modal.dialog;
+      },
+      onChangeModalCropperData: function (data) {
+        this.modal = data;
+        console.log(this.modal);
+      },
       getResult: function () {
           console.log('getResult');
           const canvas = this.$refs.clipper.clip();  //call component's clip method
@@ -152,11 +173,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+v-app {
+  background-color: red;
+}
+
 .align-center {
     text-align: center;
 }
 
 .align-top {
     vertical-align: top;
+}
+.ml--15 {
+  margin-left: -15px;
 }
 </style>
