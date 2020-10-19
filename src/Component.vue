@@ -17,26 +17,44 @@
                         src="https://cdn.vuetifyjs.com/images/john.jpg"
                         alt="John"
                     />
-
-                    <v-btn color="primary"
-                          dark
-                          absolute
-                          bottom
-                          center
-                          elevation="3"
-                          small
-                          
-                          @click="toggleModal">
+                        
+                    <v-scale-transition>
+                      <v-btn class="avatar-icon white--text"
+                            color="primary"
+                            fab
+                            dark
+                            absolute
+                            bottom
+                            left
+                            small
+                            v-show="!showModalButton"
+                            @click="toggleModal">
                         <v-icon dark small>
                             mdi-image-edit
                         </v-icon>
+                      </v-btn>
+                    </v-scale-transition>
 
-                        <v-scale-transition>
-                          <span v-show="showModalButton">
-                            Editar
-                          </span>
-                        </v-scale-transition>
-                    </v-btn>
+                    <v-scale-transition>
+                      <v-btn color="primary"
+                            dark
+                            absolute
+                            bottom
+                            center
+                            elevation="3"
+                            small
+                            v-show="showModalButton"
+                            @click="toggleModal">
+                          <v-icon dark small>
+                              mdi-image-edit
+                          </v-icon>
+
+                            <span>
+                              Editar
+                            </span>
+                      </v-btn>
+                    </v-scale-transition>
+
                 </v-avatar>
             </v-col>
         </v-row>
@@ -211,5 +229,11 @@ v-app {
 }
 .ml--15 {
   margin-left: -15px;
+}
+.avatar-icon {
+  left: auto;
+  bottom: 5px;
+  height: 25px;
+  width: 25px;
 }
 </style>
