@@ -59,12 +59,43 @@
           </v-stepper-header>
 
           <v-stepper-items>
+            <!--Paso 1-->
             <v-stepper-content step="1">
-              <v-card
-                class="mb-12"
-                color="grey lighten-1"
-                height="200px"
-              ></v-card>
+              <v-card class="mb-12">
+
+                <v-row>
+                  <v-col class="align-center" cols="6">
+                    <v-img class="margin-auto rounded-circle"
+                            :lazy-src="this.originalLazy"
+                            max-width="500"
+                            :src="this.originalImage"
+                          ></v-img>
+                    <!--
+                    <b-img rounded="circle"
+                            fluid
+                            :src="originalImage"
+                            alt="Avatar Original redondeado"></b-img>
+                    -->        
+                  </v-col>
+
+                  <v-col class="align-center" cols="6">
+                    <v-img class="margin-auto"
+                            contain
+                            fab
+                            :lazy-src="this.originalLazy"
+                            max-width="500"
+                            :src="this.originalImage"
+                          ></v-img>
+                    <!--
+                    <b-img rounded
+                            fluid
+                            :src="originalImage"
+                            alt="Avatar original cuadrado"></b-img>
+                    -->       
+                  </v-col>
+                </v-row>
+              
+              </v-card>
 
               <v-btn
                 color="primary"
@@ -139,9 +170,33 @@
         required: false,
         default: false
       },
+      originalImage: {
+        required: true
+      },
+      originalName: {
+        required: false,
+        default: ''
+      },
+      originalLazy: {
+        required: false,
+        default: 'https://picsum.photos/id/11/10/6'
+      }
     },
     data () {
       return {
+        show: false,
+        msgStep1: 'Así se ve tu imagen actual, puedes subir una nueva.',
+        msgStep2:
+            'Mueve la imagen para centrarla, puedes hacer scroll ' +
+            'para aumentar o disminuir su tamaño.',
+        imgURL: '',
+        resultURL: '',
+        rangeMin: 0,
+        rangeMax: 10,
+
+
+        //ATRIBUTOS TRAS REFACTORIZAR
+
         e1: 1, // Almacena el paso del menú actual
       }
     },
@@ -181,5 +236,13 @@
 
 .v-dialog__container {
   display: block;
+}
+
+.align-center {
+    text-align: center;
+}
+
+.margin-auto {
+  margin: auto;
 }
 </style>

@@ -69,6 +69,8 @@
     <v-image-cropper-modal 
       :dialog="this.modal.dialog"
       v-on:modal_cropper_update_data="onChangeModalCropperData"
+      :originalImage="this.image.src"
+      :originalLazy="this.image.lazy"
       ></v-image-cropper-modal>
 
   </v-app>
@@ -89,7 +91,7 @@ export default {
   props: [
     'user_id',
     'username',
-    'image'
+    'image_path'
   ],
   created() {
     //
@@ -115,6 +117,11 @@ export default {
       showModalButton: false, // Muestra el botón que llevará al modal.
       modal: {
         dialog: true,  // Indica si muestra el modal abierto.
+      },
+      image: {
+        name: '',
+        lazy: 'https://picsum.photos/id/11/10/6',
+        src: 'https://picsum.photos/id/11/500/300'
       }
     }
   },
