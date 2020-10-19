@@ -32,10 +32,10 @@ module.exports = {
       {
         test: /\.s[ac]ss$/i,
         use: [
-          'style-loader',
+          'vue-style-loader',
           'css-loader',
-          'sass-loader',
-        ]
+          'sass-loader'
+        ],
       },
       {
         test: /\.(png|gif|jpe?g|woff|woff2|eot|ttf|otf|svg|webp|wav|mp3|ogg)$/, 

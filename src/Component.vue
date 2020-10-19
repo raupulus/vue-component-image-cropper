@@ -1,162 +1,77 @@
 <template>
-    <b-container fluid id="v-image-clipper">
-        <b-row class="justify-content-center">
-            <b-col cols="12">
-                <b-col cols="12" class="user-image text-center">
-                    <b-img class="rounded-circle"
-                         title="Avatar del Usuario"
-                         alt="Avatar del Usuario"
-                         v-bind:src="imgOriginal"
-                         v-b-modal.v-modal-avatar-image-crop
-                         v-b-popover.hover.top="'Pulsa sobre el Avatar para cambiarlo'"
-                         @click="show=true" ></b-img>
-                </b-col>
+  <v-app>
+    <v-container fill-height fluid>
+        <v-row align="center" 
+               justify="center"
+               no-gutters>
+            <v-col class="align-center" 
+                   cols="12"
+                   @mouseover="showModalButton = true"
+                   @mouseout="showModalButton = false"
+                   >
+                <v-avatar
+                color="teal"
+                rounded
+                size="100">
+                    <img
+                        src="https://cdn.vuetifyjs.com/images/john.jpg"
+                        alt="John"
+                    />
+                        
+                    <v-scale-transition>
+                      <v-btn class="avatar-icon white--text"
+                            color="primary"
+                            fab
+                            dark
+                            absolute
+                            bottom
+                            left
+                            small
+                            v-show="!showModalButton"
+                            @click="toggleModal">
+                        <v-icon dark small>
+                            mdi-image-edit
+                        </v-icon>
+                      </v-btn>
+                    </v-scale-transition>
 
-                <!--
-                <b-col cols="12">
-                    <b-button v-b-modal.v-modal-avatar-image-crop
-                              @click="show=true">
-                        Cambiar Avatar
-                    </b-button>
-                </b-col>
-                -->
-            </b-col>
+                    <v-scale-transition>
+                      <v-btn color="primary"
+                            dark
+                            absolute
+                            bottom
+                            center
+                            elevation="3"
+                            small
+                            v-show="showModalButton"
+                            @click="toggleModal">
+                          <v-icon dark small>
+                              mdi-image-edit
+                          </v-icon>
 
-            <b-col cols="12">
-                <b-modal id="v-modal-avatar-image-crop"
-                         title="Selecciona nueva imagen para tu Avatar"
-                         size="xl"
-                         v-model="show"
-                         centered>
-                    <!-- Step 1 -->
-                    <b-container fluid class="my-clipper-step1" ref="my-clipper-step1">
-                        <!-- Mensaje de ayuda -->
-                        <b-row>
-                            <b-col cols="12"
-                                   class="mt-3 mb-3 p-3 bg-primary text-warning font-weight-bold">
-                                {{msgStep1}}
-                            </b-col>
-                        </b-row>
+                            <span>
+                              Editar
+                            </span>
+                      </v-btn>
+                    </v-scale-transition>
 
-                        <!-- Previsualización de imágen actual -->
-                        <b-row>
-                            <b-col cols="6">
-                                <b-img rounded="circle"
-                                       fluid
-                                       :src="imgOriginal"
-                                       alt="Avatar Original redondeado"></b-img>
-                            </b-col>
+                </v-avatar>
+            </v-col>
+        </v-row>
 
-                            <b-col cols="6">
-                                <b-img rounded
-                                       fluid
-                                       :src="imgOriginal"
-                                       alt="Avatar original cuadrado"></b-img>
-                            </b-col>
-                        </b-row>
+        <!--
+            Añadir bloque de paginación paso a paso
+            https://vuetifyjs.com/en/components/steppers/
+        -->
+    </v-container>
 
-                        <b-row id="my-cropper-upload-errors" hidden>
-                            <b-col cols="12" class="text-center">
-                                Tienes que seleccionar una imágen válida en
-                                formato png, jpg o gif.
-                            </b-col>
-                        </b-row>
+    <!-- Modal con los pasos para cambiar imagen -->
+    <v-image-cropper-modal 
+      :dialog="this.modal.dialog"
+      v-on:modal_cropper_update_data="onChangeModalCropperData"
+      ></v-image-cropper-modal>
 
-                        <!-- Botón para seleccionar imagen -->
-                        <b-row class="mt-3 mb-3">
-                            <b-col cols="12" class="text-center">
-                                <b-button>
-                                    <clipper-upload v-model="imgURL">
-                                        Seleccionar imagen
-                                    </clipper-upload>
-                                </b-button>
-                            </b-col>
-                        </b-row>
-                    </b-container>
-
-                    <!-- Step 2 -->
-                    <b-container class="my-clipper-step2"
-                                 ref="my-clipper-step2"
-                                 hidden>
-                        <!-- Mensaje de ayuda -->
-                        <b-row>
-                            <b-col cols="12"
-                                   class="mt-3 mb-3 p-3 bg-primary text-warning font-weight-bold">
-                                {{msgStep2}}
-                            </b-col>
-                        </b-row>
-
-                        <!-- Previsualización de imágen nueva -->
-                        <b-row>
-                            <b-col cols="6" cols-sm="12">
-                                <clipper-fixed class="my-clipper"
-                                               ref="clipper"
-                                               :src="imgURL"
-                                               @load="load"
-                                               @error="error"
-                                               preview="my-preview">
-                                    <div class="placeholder" slot="placeholder">
-                                        No hay imagen seleccionada
-                                    </div>
-                                </clipper-fixed>
-                            </b-col>
-
-                            <b-col cols="6" cols-sm="12">
-                                <b-row>
-                                    <b-col cols="12"
-                                           class="box-my-clipper-preview">
-                                        <clipper-preview name="my-preview"
-                                                         class="my-clipper my-clipper-rounded">
-                                            <div class="placeholder" slot="placeholder">
-                                                Previsualización
-                                            </div>
-                                        </clipper-preview>
-                                    </b-col>
-
-                                    <b-col cols="12"
-                                           class="box-my-clipper-preview">
-                                        <clipper-preview name="my-preview"
-                                                         class="my-clipper">
-                                            <div class="placeholder" slot="placeholder">
-                                                Previsualización
-                                            </div>
-                                        </clipper-preview>
-                                    </b-col>
-                                </b-row>
-                            </b-col>
-                        </b-row>
-
-                        <b-row class="mt-3 mb-3">
-                            <b-col class="text-center">
-                                <b-button variant="danger" @click="back">
-                                    Atrás
-                                </b-button>
-                            </b-col>
-
-                            <b-col class="text-center">
-                                <b-button variant="success" @click="getResult">
-                                    Guardar Imagen
-                                </b-button>
-                            </b-col>
-                        </b-row>
-                    </b-container>
-
-                    <template v-slot:modal-footer>
-                        <div class="w-100">
-                            <b-button
-                                variant="warning"
-                                size="sm"
-                                class="float-right"
-                                @click="show=false"
-                            >
-                                Cerrar
-                            </b-button>
-                        </div>
-                    </template>
-                </b-modal>
-            </b-col>
-        </b-row>
-    </b-container>
+  </v-app>
 </template>
 
 <script>
@@ -164,15 +79,9 @@
 //https://timtnleeproject.github.io/vuejs-clipper/#/examples/quick-start
 //https://timtnleeproject.github.io/vuejs-clipper/#/examples/profile-photo
 
-import Vue from 'vue'
+//import Vue from 'vue'
 import 'vuejs-clipper';
-import axios from 'axios';
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-
-// Install BootstrapVue
-Vue.use(BootstrapVue)
-// Optionally install the BootstrapVue icon components plugin
-Vue.use(IconsPlugin)
+//import axios from 'axios';
 
 //import VueAxios from "vue-axios";
 
@@ -186,7 +95,7 @@ export default {
     //
   },
   mounted() {
-   console.log('Component mounted');
+    console.log('Component mounted');
   },
   data () {
     return {
@@ -201,9 +110,28 @@ export default {
       originalName: '',
       rangeMin: 0,
       rangeMax: 10,
+
+      // Atributos nuevos desde refactorización del componente.
+      showModalButton: false, // Muestra el botón que llevará al modal.
+      modal: {
+        dialog: true,  // Indica si muestra el modal abierto.
+      }
     }
   },
   methods: {
+      toggleModal: function () {
+        this.modal.dialog = !this.modal.dialog;
+        
+        console.log('Al abrir modal:');
+        console.log(this.modal);
+      },
+      onChangeModalCropperData: function (data) {
+        this.modal = data;
+        
+        console.log('Al cambiar datos del modal:');
+        console.log(this.modal);
+      },
+      /*
       getResult: function () {
           console.log('getResult');
           const canvas = this.$refs.clipper.clip();  //call component's clip method
@@ -228,9 +156,12 @@ export default {
           // Cierro el modal
           this.$bvModal.hide('v-modal-avatar-image-crop');
       },
+      */
+
       /**
        * Cuando se carga correctamente la imagen.
        */
+      /*
       load: function() {
           let step1 = document.getElementsByClassName('my-clipper-step1')[0];
           let step2 = document.getElementsByClassName('my-clipper-step2')[0];
@@ -246,9 +177,12 @@ export default {
 
           }
       },
+      */
+
       /**
        * Cuando no se carga la imagen o es otro tipo de archivo.
        */
+      /*
       error: function() {
           //let step1 = document.getElementsByClassName('my-clipper-step1')[0];
           //let step2 = document.getElementsByClassName('my-clipper-step2')[0];
@@ -264,6 +198,7 @@ export default {
           step2.setAttribute('hidden', 'true');
           step1.removeAttribute('hidden');
       }
+      */
   },
  /*
  computed() {
@@ -281,40 +216,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '~bootstrap';
-  @import '~bootstrap-vue';
+v-app {
+  background-color: red;
+}
 
-    #v-image-clipper {
+.align-center {
+    text-align: center;
+}
 
-    }
-    .my-clipper {
-        width: 100%;
-        max-width: 300px;
-        border: 6px solid #3a3a3a;
-    }
-
-    .placeholder {
-        text-align: center;
-        padding: 20px;
-        background-color: lightgray;
-    }
-
-    .box-my-clipper-preview {
-        margin: 10px;
-    }
-
-    .my-clipper-rounded,
-    .my-clipper-rounded > div,
-    .my-clipper-rounded .placeholder {
-        border-radius: 50%;
-    }
-
-    .user-image img {
-        width: 100px;
-        height: 100px;
-    }
-
-    .user-image:hover {
-        cursor: pointer;
-    }
+.align-top {
+    vertical-align: top;
+}
+.ml--15 {
+  margin-left: -15px;
+}
+.avatar-icon {
+  left: auto;
+  bottom: 5px;
+  height: 25px;
+  width: 25px;
+}
 </style>

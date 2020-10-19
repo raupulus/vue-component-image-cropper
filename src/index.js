@@ -1,8 +1,10 @@
 import Component from "./Component.vue";
+import CropperModal from './components/CropperModal.vue';
 
 function install(Vue) {
   if (install.installed) return;
   install.installed = true;
+  Vue.component("v-image-cropper-modal", CropperModal);
   Vue.component("v-image-cropper", Component);
 }
 
@@ -11,6 +13,7 @@ const plugin = {
 };
 
 let GlobalVue = null;
+
 if (typeof window !== "undefined") {
   GlobalVue = window.Vue;
 } else if (typeof global !== "undefined") {
@@ -22,4 +25,4 @@ if (GlobalVue) {
 
 Component.install = install;
 
-export default Component;
+export default {Component, CropperModal};
