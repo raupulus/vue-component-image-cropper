@@ -232,7 +232,7 @@ v-app {
 }
 .avatar-icon {
   left: auto;
-  bottom: 5px;
+  bottom: 5px !important;
   height: 25px;
   width: 25px;
 }
