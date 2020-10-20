@@ -39,7 +39,7 @@
               :complete="e1 > 1"
               step="1"
             >
-              Nombre del paso 1
+              Previsualización de imagen actual
             </v-stepper-step>
 
             <v-divider></v-divider>
@@ -48,13 +48,7 @@
               :complete="e1 > 2"
               step="2"
             >
-              Nombre del paso 2
-            </v-stepper-step>
-
-            <v-divider></v-divider>
-
-            <v-stepper-step step="3">
-              Nombre del paso 3
+              Seleccionar imagen
             </v-stepper-step>
           </v-stepper-header>
 
@@ -64,6 +58,16 @@
               <v-card class="mb-12">
 
                 <v-row>
+                  <v-col class="align-center" cols="6">
+                    <v-img class="margin-auto"
+                            contain
+                            fab
+                            :lazy-src="this.originalLazy"
+                            max-width="500"
+                            :src="this.originalImage"
+                          ></v-img>
+                  </v-col>
+
                   <v-col class="align-center" cols="6">
                     <v-img class="margin-auto rounded-circle"
                             :lazy-src="this.originalLazy"
@@ -77,24 +81,7 @@
                             alt="Avatar Original redondeado"></b-img>
                     -->        
                   </v-col>
-
-                  <v-col class="align-center" cols="6">
-                    <v-img class="margin-auto"
-                            contain
-                            fab
-                            :lazy-src="this.originalLazy"
-                            max-width="500"
-                            :src="this.originalImage"
-                          ></v-img>
-                    <!--
-                    <b-img rounded
-                            fluid
-                            :src="originalImage"
-                            alt="Avatar original cuadrado"></b-img>
-                    -->       
-                  </v-col>
                 </v-row>
-              
               </v-card>
 
               <v-btn
@@ -109,49 +96,53 @@
               </v-btn>
             </v-stepper-content>
 
+            <!-- Paso 2 -->
             <v-stepper-content step="2">
-              <v-card
-                class="mb-12"
-                color="grey lighten-1"
-                height="200px"
-              ></v-card>
+               <v-card class="mb-12">
 
-              <v-btn
-                color="primary"
-                @click="e1 += 1"
-              >
-                Siguiente
-              </v-btn>
+                <v-row>
+                  <v-col class="align-center" cols="12">
+                    <clipper-fixed class="my-clipper"
+                                    ref="clipper"
+                                    :src="imgURL"
+                                    @load="load"
+                                    @error="error"
+                                    preview="my-preview">
+                        <div class="placeholder" slot="placeholder">
+                            No hay imagen seleccionada
+                        </div>
+                    </clipper-fixed>
+                  </v-col>
+
+                  <v-col class="align-center" cols="12">
+                    <clipper-preview name="my-preview"
+                                     class="my-clipper my-clipper-rounded">
+                        <div class="placeholder" slot="placeholder">
+                            Previsualización 1
+                        </div>
+                    </clipper-preview>
+                  </v-col>
+
+                  <v-col class="align-center" cols="12">
+                    <clipper-preview name="my-preview"
+                                     class="my-clipper">
+                        <div class="placeholder" slot="placeholder">
+                            Previsualización 2
+                        </div>
+                    </clipper-preview>
+                  </v-col>
+                </v-row>
+              </v-card>
 
               <v-btn text @click="e1 -= 1">
                 Atrás
               </v-btn>
-
-              <v-btn text @click="closeModal">
-                Cerrar
-              </v-btn>
-            </v-stepper-content>
-
-            <v-stepper-content step="3">
-              <v-card
-                class="mb-12"
-                color="grey lighten-1"
-                height="200px"
-              ></v-card>
 
               <v-btn
                 color="primary"
                 @click="save"
               >
                 Guardar
-              </v-btn>
-
-              <v-btn text @click="e1 -= 1">
-                Atrás
-              </v-btn>
-
-              <v-btn text @click="closeModal">
-                Cerrar
               </v-btn>
             </v-stepper-content>
           </v-stepper-items>
@@ -179,7 +170,7 @@
       },
       originalLazy: {
         required: false,
-        default: 'https://picsum.photos/id/11/10/6'
+        default: 'assets/default_lazy.png'
       }
     },
     data () {

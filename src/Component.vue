@@ -13,10 +13,8 @@
                 color="teal"
                 rounded
                 size="100">
-                    <img
-                        src="https://cdn.vuetifyjs.com/images/john.jpg"
-                        alt="John"
-                    />
+                    <img src="assets/default_avatar.png"
+                         alt="Default Image" />
                         
                     <v-scale-transition>
                       <v-btn class="avatar-icon white--text"
@@ -116,12 +114,12 @@ export default {
       // Atributos nuevos desde refactorización del componente.
       showModalButton: false, // Muestra el botón que llevará al modal.
       modal: {
-        dialog: true,  // Indica si muestra el modal abierto.
+        dialog: false,  // Indica si muestra el modal abierto.
       },
       image: {
-        name: '',
-        lazy: 'https://picsum.photos/id/11/10/6',
-        src: 'https://picsum.photos/id/11/500/300'
+        name: 'Default Image',
+        lazy: 'assets/default_lazy.png',
+        src: 'assets/default_800x600.png'
       }
     }
   },
