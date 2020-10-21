@@ -53,6 +53,7 @@
           </v-stepper-header>
 
           <v-stepper-items>
+
             <!--Paso 1-->
             <v-stepper-content step="1">
               <v-card class="mb-12">
@@ -80,6 +81,16 @@
                             :src="originalImage"
                             alt="Avatar Original redondeado"></b-img>
                     -->        
+                  </v-col>
+                </v-row>
+
+                <v-row>
+                  <v-col class="align-center" cols="12">
+                    <v-btn>
+                        <clipper-upload v-model="imgURL">
+                            Seleccionar nueva imagen
+                        </clipper-upload>
+                    </v-btn>
                   </v-col>
                 </v-row>
               </v-card>
@@ -154,7 +165,22 @@
 </template>
 
 <script>
+  import {
+    //clipperBasic, 
+    clipperUpload, 
+    clipperFixed, 
+    clipperPreview, 
+    //clipperRange
+  } from 'vuejs-clipper';
+
   export default {
+    components: {
+      //'clipper-basic': clipperBasic,
+      'clipper-upload': clipperUpload,
+      'clipper-fixed': clipperFixed,
+      'clipper-preview': clipperPreview,
+      //'clipper-range': clipperRange,
+    },
     props: {
       dialog: {
         type: Boolean,
@@ -211,7 +237,41 @@
       save() {
         // TODO → Procesar guardado
         this.closeModal();
-      }
+      },
+
+      /**
+       * Cuando se carga correctamente la imagen.
+       */
+      load() {
+        /*  
+        let step1 = document.getElementsByClassName('my-clipper-step1')[0];
+        let step2 = document.getElementsByClassName('my-clipper-step2')[0];
+
+        let boxError = document.getElementById('my-cropper-upload-errors');
+
+        if (step1 && step2) {
+            console.log(step1);
+            step1.setAttribute('hidden', 'true');
+            step2.removeAttribute('hidden');
+
+            boxError.setAttribute('class', 'hidden');
+
+        }
+        */
+      },
+
+      /**
+       * Cuando no se carga la imagen o es otro tipo de archivo.
+       */
+      error() {
+          //let step1 = document.getElementsByClassName('my-clipper-step1')[0];
+          //let step2 = document.getElementsByClassName('my-clipper-step2')[0];
+
+          //let boxError = document.getElementById('my-cropper-upload-errors');
+
+          //boxError.removeAttribute('hidden');
+      },
+     
    },
   }
 </script>

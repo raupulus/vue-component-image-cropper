@@ -80,7 +80,7 @@
 //https://timtnleeproject.github.io/vuejs-clipper/#/examples/profile-photo
 
 //import Vue from 'vue'
-import 'vuejs-clipper';
+//import 'vuejs-clipper';
 //import axios from 'axios';
 
 //import VueAxios from "vue-axios";
@@ -161,48 +161,6 @@ export default {
           // Cierro el modal
           this.$bvModal.hide('v-modal-avatar-image-crop');
       },
-      */
-
-      /**
-       * Cuando se carga correctamente la imagen.
-       */
-      /*
-      load: function() {
-          let step1 = document.getElementsByClassName('my-clipper-step1')[0];
-          let step2 = document.getElementsByClassName('my-clipper-step2')[0];
-
-          let boxError = document.getElementById('my-cropper-upload-errors');
-
-          if (step1 && step2) {
-              console.log(step1);
-              step1.setAttribute('hidden', 'true');
-              step2.removeAttribute('hidden');
-
-              boxError.setAttribute('class', 'hidden');
-
-          }
-      },
-      */
-
-      /**
-       * Cuando no se carga la imagen o es otro tipo de archivo.
-       */
-      /*
-      error: function() {
-          //let step1 = document.getElementsByClassName('my-clipper-step1')[0];
-          //let step2 = document.getElementsByClassName('my-clipper-step2')[0];
-
-          let boxError = document.getElementById('my-cropper-upload-errors');
-
-          boxError.removeAttribute('hidden');
-      },
-      back: function() {
-          let step1 = document.getElementsByClassName('my-clipper-step1')[0];
-          let step2 = document.getElementsByClassName('my-clipper-step2')[0];
-
-          step2.setAttribute('hidden', 'true');
-          step1.removeAttribute('hidden');
-      }
       */
   },
  /*
