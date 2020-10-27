@@ -173,6 +173,7 @@
     //clipperRange
   } from 'vuejs-clipper';
 
+
   export default {
     components: {
       //'clipper-basic': clipperBasic,
