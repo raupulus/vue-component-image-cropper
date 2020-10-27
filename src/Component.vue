@@ -13,7 +13,7 @@
                 color="teal"
                 rounded
                 size="100">
-                    <img src="assets/default_avatar.png"
+                    <img src="./assets/default_avatar.png"
                          alt="Default Image" />
                         
                     <v-scale-transition>
@@ -75,16 +75,6 @@
 </template>
 
 <script>
-//https://www.npmjs.com/package/vuejs-clipper
-//https://timtnleeproject.github.io/vuejs-clipper/#/examples/quick-start
-//https://timtnleeproject.github.io/vuejs-clipper/#/examples/profile-photo
-
-//import Vue from 'vue'
-//import 'vuejs-clipper';
-//import axios from 'axios';
-
-//import VueAxios from "vue-axios";
-
 export default {
   props: [
     'user_id',
@@ -118,8 +108,8 @@ export default {
       },
       image: {
         name: 'Default Image',
-        lazy: 'assets/default_lazy.png',
-        src: 'assets/default_800x600.png'
+        lazy: require('./assets/default_lazy.png'),
+        src: require('./assets/default_800x600.png')
       }
     }
   },

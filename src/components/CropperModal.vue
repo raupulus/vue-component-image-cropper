@@ -59,7 +59,7 @@
               <v-card class="mb-12">
 
                 <v-row>
-                  <v-col class="align-center" cols="6">
+                  <v-col class="align-center" cols="6">  
                     <v-img class="margin-auto"
                             contain
                             fab
@@ -75,12 +75,6 @@
                             max-width="500"
                             :src="this.originalImage"
                           ></v-img>
-                    <!--
-                    <b-img rounded="circle"
-                            fluid
-                            :src="originalImage"
-                            alt="Avatar Original redondeado"></b-img>
-                    -->        
                   </v-col>
                 </v-row>
 
@@ -95,16 +89,6 @@
                 </v-row>
               </v-card>
 
-              <v-btn
-                color="primary"
-                @click="e1 = 2"
-              >
-                Siguiente
-              </v-btn>
-
-              <v-btn text @click="closeModal">
-                Cerrar
-              </v-btn>
             </v-stepper-content>
 
             <!-- Paso 2 -->
@@ -165,23 +149,7 @@
 </template>
 
 <script>
-  import {
-    //clipperBasic, 
-    clipperUpload, 
-    clipperFixed, 
-    clipperPreview, 
-    //clipperRange
-  } from 'vuejs-clipper';
-
-
   export default {
-    components: {
-      //'clipper-basic': clipperBasic,
-      'clipper-upload': clipperUpload,
-      'clipper-fixed': clipperFixed,
-      'clipper-preview': clipperPreview,
-      //'clipper-range': clipperRange,
-    },
     props: {
       dialog: {
         type: Boolean,
@@ -197,11 +165,12 @@
       },
       originalLazy: {
         required: false,
-        default: 'assets/default_lazy.png'
+        default: '../assets/default_lazy.png'
       }
     },
     data () {
       return {
+        testImage: '../assets/default_800x600.png',
         show: false,
         msgStep1: 'Así se ve tu imagen actual, puedes subir una nueva.',
         msgStep2:
@@ -244,6 +213,9 @@
        * Cuando se carga correctamente la imagen.
        */
       load() {
+        // Lleva al segundo paso.
+        this.e1 = 2;
+
         /*  
         let step1 = document.getElementsByClassName('my-clipper-step1')[0];
         let step2 = document.getElementsByClassName('my-clipper-step2')[0];
