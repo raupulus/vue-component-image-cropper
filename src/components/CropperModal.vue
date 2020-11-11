@@ -95,8 +95,8 @@
             <v-stepper-content step="2">
                <v-card class="mb-12">
 
-                <v-row>
-                  <v-col class="align-center" cols="12">
+                <v-row justify="center">
+                  <v-col xs="8" sm="10" md="3" align-self="center">
                     <clipper-fixed class="my-clipper"
                                     ref="clipper"
                                     :src="imgURL"
@@ -109,7 +109,7 @@
                     </clipper-fixed>
                   </v-col>
 
-                  <v-col class="align-center" cols="12">
+                  <v-col xs="8" sm="10" md="3" align-self="center">
                     <clipper-preview name="my-preview"
                                      class="my-clipper my-clipper-rounded">
                         <div class="placeholder" slot="placeholder">
@@ -118,7 +118,7 @@
                     </clipper-preview>
                   </v-col>
 
-                  <v-col class="align-center" cols="12">
+                  <v-col xs="8" sm="10" md="3" align-self="center">
                     <clipper-preview name="my-preview"
                                      class="my-clipper">
                         <div class="placeholder" slot="placeholder">
@@ -244,7 +244,6 @@
 
           //boxError.removeAttribute('hidden');
       },
-     
    },
   }
 </script>
@@ -268,5 +267,14 @@
 
 .margin-auto {
   margin: auto;
+}
+</style>
+
+<style lang="scss">
+.my-clipper-rounded,
+.my-clipper-rounded > div,
+.my-clipper-rounded > .wrap,
+.my-clipper-rounded .placeholder {
+  border-radius: 50%;
 }
 </style>
