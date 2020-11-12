@@ -153,10 +153,14 @@ export default {
       console.log('Al cambiar datos del modal:');
       console.log(this.modal);
 
-      this.image.src = data.image;
-      this.image.name = data.name;
+      if (data.image) {
+        this.image.src = data.image;
+        this.inputValue = data.image;
+      }
 
-      this.inputValue = data.image;
+      if (data.name) {
+        this.image.name = data.name;
+      }
     },
   },
  /*
