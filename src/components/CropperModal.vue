@@ -79,6 +79,13 @@
                 </v-row>
 
                 <v-row>
+                  <v-col id="my-cropper-upload-errors" 
+                         cols="12" 
+                         class="text-center">
+                      Tienes que seleccionar una imágen válida en
+                      formato png, jpg o gif.
+                  </v-col>
+
                   <v-col class="align-center" cols="12">
                     <v-btn>
                         <clipper-upload v-model="selectImage">
@@ -196,11 +203,26 @@
         type: Boolean,
         required: false,
         default: false
+      },
+
+      // Indica si se subirá a una api.
+      has_api: {
+        type: Boolean,
+        required: false,
+        default: false
+      },
+
+      // Contiene la dirección de la api.
+      api_url: {
+        type: String,
+        required: false,
+        default: null
       }
     },
     data () {
       return {
         current_step: 1, // Almacena el paso del menú actual.
+        showErrors: false, // Indica si muestra errores
         selectImage: '',  // Imagen seleccionada.
         resultImage: '',  // Almacena la imagen como resultado.
         resultName: '',  // Almacena el nombre original de la imagen subida.
@@ -227,9 +249,10 @@
         this.eventUpdateData();
       },
 
-      /*      
-      uploadImage: async function() {
+      uploadImageToApi: async function() {
           console.log('uploadImage');
+        /*      
+
           axios.post(
               '/panel/user/ajax/avatar/upload',
               {
@@ -242,11 +265,8 @@
                   this.imgOriginal = response.data.data.new_image;
               }
           });
-
-          // Cierro el modal
-          this.$bvModal.hide('v-modal-avatar-image-crop');
+        */
       },
-      */
 
       /**
        * Procesa el guardado de la imagen en el servidor.
@@ -256,8 +276,6 @@
 
         const clipper = this.$refs.clipper;
 
-        //clipper.options.wPixel = this.width;
-
         // Recorta la imagen fijando el ancho y por tanto proporción sobre este.
         const canvas = clipper.clip({wPixel: this.width});
 
@@ -265,17 +283,17 @@
         this.resultImage = canvas.toDataURL("image/jpeg", 1);
         
         // El nombre de la imagen subida desde el cliente.
+        // TODO → Conseguir nombre del archivo original.
         //this.resultName = canvas.
-        
         
         console.log(canvas);
         console.log(this.resultImage);
         console.log(this.selectImage);
-        
-        //this.uploadImage();
 
-
-
+        // Inicia la subida al servidor en caso de que proceda.
+        if (this.has_api) {
+          this.uploadImageToApi();
+        }
 
         this.closeModal();
       },
@@ -286,6 +304,8 @@
       load() {
         // Lleva al segundo paso.
         this.current_step = 2;
+        this.showErrors = false;
+
 
         /*  
         let step1 = document.getElementsByClassName('my-clipper-step1')[0];
@@ -308,12 +328,10 @@
        * Cuando no se carga la imagen o es otro tipo de archivo.
        */
       error() {
-          //let step1 = document.getElementsByClassName('my-clipper-step1')[0];
-          //let step2 = document.getElementsByClassName('my-clipper-step2')[0];
+          console.log('error()');
+          // TODO → NO HACE CASO, MIRAR QUE OCURRE
 
-          //let boxError = document.getElementById('my-cropper-upload-errors');
-
-          //boxError.removeAttribute('hidden');
+          this.showErrors = true;  
       },
    },
   }
@@ -338,6 +356,10 @@
 
 .margin-auto {
   margin: auto;
+}
+
+#my-cropper-upload-errors {
+  color: #ff0000;
 }
 </style>
 

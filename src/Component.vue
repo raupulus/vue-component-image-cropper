@@ -67,6 +67,8 @@
       v-on:modal_cropper_update_data="onChangeModalCropperData"
       :originalImage="this.image.src"
       :originalLazy="this.image.lazy"
+      :has_api="this.api.has_api"
+      :api_url="this.api.url"
       ></v-image-cropper-modal>
 
   </v-app>
@@ -91,12 +93,19 @@ export default {
       required: false,
       default: 'image-cropped'
     },
+
+    // Api URL
+    api_url: {
+      required: false,
+      default: null
+    },
   },
   created() {
     //
   },
   mounted() {
     console.log('Component mounted');
+
     if (this.image_path) {
       this.image.src = this.image_path;
     }
@@ -105,6 +114,10 @@ export default {
       this.image.lazy = this.image_lazy_path;
     }
 
+    if (this.api_url) {
+      this.api.has_upload = true;
+      this.api.url = this.api_url;
+    }
   },
   data () {
     return {
@@ -119,6 +132,10 @@ export default {
         name: 'Default Image',
         lazy: require('./assets/default_lazy.png'),
         src: require('./assets/default_800x600.png')
+      },
+      api: {
+        has_upload: false,
+        url: null,
       }
     }
   },
