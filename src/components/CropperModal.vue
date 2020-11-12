@@ -33,10 +33,10 @@
         </v-toolbar>
         
 
-        <v-stepper v-model="e1">
+        <v-stepper v-model="current_step">
           <v-stepper-header>
             <v-stepper-step
-              :complete="e1 > 1"
+              :complete="current_step > 1"
               step="1"
             >
               Previsualización de imagen actual
@@ -45,7 +45,7 @@
             <v-divider></v-divider>
 
             <v-stepper-step
-              :complete="e1 > 2"
+              :complete="current_step > 2"
               step="2"
             >
               Seleccionar imagen
@@ -81,7 +81,7 @@
                 <v-row>
                   <v-col class="align-center" cols="12">
                     <v-btn>
-                        <clipper-upload v-model="imgURL">
+                        <clipper-upload v-model="selectImage">
                             Seleccionar nueva imagen
                         </clipper-upload>
                     </v-btn>
@@ -99,12 +99,14 @@
                   <v-col xs="8" sm="10" md="3" align-self="center">
                     <clipper-fixed class="my-clipper"
                                     ref="clipper"
-                                    :src="imgURL"
+                                    :src="selectImage"
                                     @load="load"
                                     @error="error"
+                                    :round="round"
+                                    :ratio="ratio"
                                     preview="my-preview">
                         <div class="placeholder" slot="placeholder">
-                            No hay imagen seleccionada
+                            Selecciona una Imagen
                         </div>
                     </clipper-fixed>
                   </v-col>
@@ -129,7 +131,7 @@
                 </v-row>
               </v-card>
 
-              <v-btn text @click="e1 -= 1">
+              <v-btn text @click="current_step -= 1">
                 Atrás
               </v-btn>
 
@@ -151,40 +153,57 @@
 <script>
   export default {
     props: {
+      // Indica si el modal está abierto.
       dialog: {
         type: Boolean,
         required: false,
         default: false
       },
+
+      // Imagen con la que se comienza.
       originalImage: {
         required: true
       },
+
+      // Nombre de la imagen original.
       originalName: {
         required: false,
         default: ''
       },
+
+      // Miniatura mientras carga la imagen.
       originalLazy: {
         required: false,
         default: '../assets/default_lazy.png'
+      },
+
+      // Indica el ancho, la altura se calcula según relación de aspecto.
+      width: {
+        type: Number,
+        required: false,
+        default: 400
+      }, 
+
+      // Indica la relación de aspecto 1, 4/3, 16:9, 21:9....
+      ratio: {
+        type: Number,
+        required: false,
+        default: 1
+      },
+
+      // Indica si el selector de recorte será redondo.
+      round: {
+        type: Boolean,
+        required: false,
+        default: false
       }
     },
     data () {
       return {
-        testImage: '../assets/default_800x600.png',
-        show: false,
-        msgStep1: 'Así se ve tu imagen actual, puedes subir una nueva.',
-        msgStep2:
-            'Mueve la imagen para centrarla, puedes hacer scroll ' +
-            'para aumentar o disminuir su tamaño.',
-        imgURL: '',
-        resultURL: '',
-        rangeMin: 0,
-        rangeMax: 10,
-
-
-        //ATRIBUTOS TRAS REFACTORIZAR
-
-        e1: 1, // Almacena el paso del menú actual
+        selectImage: '',  // Imagen seleccionada.
+        current_step: 1, // Almacena el paso del menú actual.
+        resultImage: '',  // Almacena la imagen como resultado.
+        resultName: '',  // Almacena el nombre original de la imagen subida.
       }
     },
     methods: {
@@ -192,7 +211,12 @@
        * Lanza el evento al padre con los datos del modal actualizado.
        */
       eventUpdateData() {
-         let data = {dialog: !this.dialog}
+         let data = {
+           dialog: !this.dialog,
+           image: this.resultImage,
+           name: this.resultName,
+         };
+
          this.$emit('modal_cropper_update_data', data);
       },
       /**
@@ -201,11 +225,57 @@
       closeModal() {
         this.eventUpdateData();
       },
+
+      /*      
+      uploadImage: async function() {
+          console.log('uploadImage');
+          axios.post(
+              '/panel/user/ajax/avatar/upload',
+              {
+                  image: this.resultURL,
+                  user_id: this.user_id
+              }
+          ).then(response => {
+              if (!response.data.error) {
+                  console.log(response);
+                  this.imgOriginal = response.data.data.new_image;
+              }
+          });
+
+          // Cierro el modal
+          this.$bvModal.hide('v-modal-avatar-image-crop');
+      },
+      */
+
       /**
        * Procesa el guardado de la imagen en el servidor.
        */
       save() {
-        // TODO → Procesar guardado
+        console.log('save()');
+
+        const clipper = this.$refs.clipper;
+
+        //clipper.options.wPixel = this.width;
+
+        // Recorta la imagen fijando el ancho y por tanto proporción sobre este.
+        const canvas = clipper.clip({wPixel: this.width});
+
+        // La imagen que ha resultado.
+        this.resultImage = canvas.toDataURL("image/jpeg", 1);
+        
+        // El nombre de la imagen subida desde el cliente.
+        //this.resultName = canvas.
+        
+        
+        console.log(canvas);
+        console.log(this.resultImage);
+        console.log(this.selectImage);
+        
+        //this.uploadImage();
+
+
+
+
         this.closeModal();
       },
 
@@ -214,7 +284,7 @@
        */
       load() {
         // Lleva al segundo paso.
-        this.e1 = 2;
+        this.current_step = 2;
 
         /*  
         let step1 = document.getElementsByClassName('my-clipper-step1')[0];
