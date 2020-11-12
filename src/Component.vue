@@ -13,8 +13,8 @@
                 color="teal"
                 rounded
                 size="100">
-                    <img src="./assets/default_avatar.png"
-                         alt="Default Image" />
+                    <img :src="image.src"
+                         :alt="image.name" />
                         
                     <v-scale-transition>
                       <v-btn class="avatar-icon white--text"
@@ -125,6 +125,8 @@ export default {
         
         console.log('Al cambiar datos del modal:');
         console.log(this.modal);
+
+        this.image.src = data.image;
       },
       /*
       getResult: function () {

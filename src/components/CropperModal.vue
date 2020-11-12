@@ -200,8 +200,8 @@
     },
     data () {
       return {
-        selectImage: '',  // Imagen seleccionada.
         current_step: 1, // Almacena el paso del menú actual.
+        selectImage: '',  // Imagen seleccionada.
         resultImage: '',  // Almacena la imagen como resultado.
         resultName: '',  // Almacena el nombre original de la imagen subida.
       }
@@ -223,6 +223,7 @@
        * Cierra el modal.
        */
       closeModal() {
+        this.current_step = 1;
         this.eventUpdateData();
       },
 
