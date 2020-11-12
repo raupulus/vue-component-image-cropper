@@ -1,5 +1,8 @@
 <template>
   <v-app>
+    
+    <input type="hidden" :name="input_name" :value="inputValue"/>
+
     <v-container fill-height fluid>
         <v-row align="center" 
                justify="center"
@@ -56,11 +59,6 @@
                 </v-avatar>
             </v-col>
         </v-row>
-
-        <!--
-            Añadir bloque de paginación paso a paso
-            https://vuetifyjs.com/en/components/steppers/
-        -->
     </v-container>
 
     <!-- Modal con los pasos para cambiar imagen -->
@@ -76,33 +74,44 @@
 
 <script>
 export default {
-  props: [
-    'user_id',
-    'username',
-    'image_path'
-  ],
+  props: {
+    // Ruta hacia la imagen con la que se comienza.
+    image_path: {
+      required: false,
+      default: null
+    },
+
+    image_lazy_path: {
+      required: false,
+      default: null
+    },
+
+    // Nombre del campo input dónde se almacenará la imagen..
+    input_name: {
+      required: false,
+      default: 'image-cropped'
+    },
+  },
   created() {
     //
   },
   mounted() {
     console.log('Component mounted');
+    if (this.image_path) {
+      this.image.src = this.image_path;
+    }
+
+    if (this.image_lazy_path) {
+      this.image.lazy = this.image_lazy_path;
+    }
+
   },
   data () {
     return {
-      show: false,
-      msgStep1: 'Así se ve tu imagen actual, puedes subir una nueva.',
-      msgStep2:
-          'Mueve la imagen para centrarla, puedes hacer scroll ' +
-          'para aumentar o disminuir su tamaño.',
-      imgURL: './assets/',
-      resultURL: '',
-      imgOriginal: this.image,
-      originalName: '',
-      rangeMin: 0,
-      rangeMax: 10,
-
-      // Atributos nuevos desde refactorización del componente.
       showModalButton: false, // Muestra el botón que llevará al modal.
+
+      inputValue: '',  // Valor del input
+
       modal: {
         dialog: false,  // Indica si muestra el modal abierto.
       },
@@ -114,46 +123,24 @@ export default {
     }
   },
   methods: {
-      toggleModal: function () {
-        this.modal.dialog = !this.modal.dialog;
-        
-        console.log('Al abrir modal:');
-        console.log(this.modal);
-      },
-      onChangeModalCropperData: function (data) {
-        this.modal = data;
-        
-        console.log('Al cambiar datos del modal:');
-        console.log(this.modal);
+    toggleModal: function () {
+      this.modal.dialog = !this.modal.dialog;
+      
+      console.log('Al abrir modal:');
+      console.log(this.modal);
+    },
 
-        this.image.src = data.image;
-      },
-      /*
-      getResult: function () {
-          console.log('getResult');
-          const canvas = this.$refs.clipper.clip();  //call component's clip method
-          this.resultURL = canvas.toDataURL("image/jpeg", 1);  //canvas->image
-          this.uploadImage();
-      },
-      uploadImage: async function() {
-          console.log('uploadImage');
-          axios.post(
-              '/panel/user/ajax/avatar/upload',
-              {
-                  image: this.resultURL,
-                  user_id: this.user_id
-              }
-          ).then(response => {
-              if (!response.data.error) {
-                  console.log(response);
-                  this.imgOriginal = response.data.data.new_image;
-              }
-          });
+    onChangeModalCropperData: function (data) {
+      this.modal = data;
+      
+      console.log('Al cambiar datos del modal:');
+      console.log(this.modal);
 
-          // Cierro el modal
-          this.$bvModal.hide('v-modal-avatar-image-crop');
-      },
-      */
+      this.image.src = data.image;
+      this.image.name = data.name;
+
+      this.inputValue = data.image;
+    },
   },
  /*
  computed() {
@@ -162,11 +149,11 @@ export default {
    }
  },
  */
- filters: {
+  filters: {
     roundTo2Decimals(num) {
       return Math.round(num * 100) / 100;
     }
- }
+  }
 };
 </script>
 
