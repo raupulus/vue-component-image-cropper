@@ -15,7 +15,7 @@
                 <v-avatar
                 color="teal"
                 rounded
-                size="100">
+                :size="preview_width">
                     <img :src="image.src"
                          :alt="image.name" />
                         
@@ -69,6 +69,8 @@
       :originalLazy="this.image.lazy"
       :has_api="this.api.has_api"
       :api_url="this.api.url"
+      :ratio="this.aspect_ratio"
+      :width="this.width"
       ></v-image-cropper-modal>
 
   </v-app>
@@ -98,6 +100,25 @@ export default {
     api_url: {
       required: false,
       default: null
+    },
+
+    // El ancho en píxeles para la imagen resultante.
+    width: {
+      required: false,
+      default: 400
+    },
+
+    // Las proporciones 1, 3/4, 16:9, 21:9...
+    aspect_ratio: {
+      required: false,
+      default: 16/9
+    },
+
+    // El ancho del icono para previsualizar en píxeles o porcentaje.
+    // TODO → Se deforma al tomar este valor
+    preview_width: {
+      required: false,
+      default: 100
     },
   },
   created() {
