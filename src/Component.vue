@@ -15,6 +15,7 @@
                 <v-avatar
                 color="teal"
                 rounded
+                height="100%"
                 :size="preview_width">
                     <img :src="image.src"
                          :alt="image.name" />
@@ -111,11 +112,10 @@ export default {
     // Las proporciones 1, 3/4, 16:9, 21:9...
     aspect_ratio: {
       required: false,
-      default: 16/9
+      default: 1
     },
 
     // El ancho del icono para previsualizar en píxeles o porcentaje.
-    // TODO → Se deforma al tomar este valor
     preview_width: {
       required: false,
       default: 100
