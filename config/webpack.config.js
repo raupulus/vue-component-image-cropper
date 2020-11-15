@@ -39,7 +39,9 @@ module.exports = {
       },
       {
         test: /\.(png|gif|jpe?g|woff|woff2|eot|ttf|otf|svg|webp|wav|mp3|ogg)$/, 
-        use: "file-loader" 
+        use: "file-loader?name=assets/[name].[ext]?[hash]",
+        //include: '/src/assets'
+
       },
       {
 

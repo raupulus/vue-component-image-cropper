@@ -1,5 +1,8 @@
 <template>
   <v-app>
+    
+    <input type="hidden" :name="input_name" :value="inputValue"/>
+
     <v-container fill-height fluid>
         <v-row align="center" 
                justify="center"
@@ -12,11 +15,10 @@
                 <v-avatar
                 color="teal"
                 rounded
-                size="100">
-                    <img
-                        src="https://cdn.vuetifyjs.com/images/john.jpg"
-                        alt="John"
-                    />
+                height="100%"
+                :size="preview_width">
+                    <img :src="image.src"
+                         :alt="image.name" />
                         
                     <v-scale-transition>
                       <v-btn class="avatar-icon white--text"
@@ -58,147 +60,129 @@
                 </v-avatar>
             </v-col>
         </v-row>
-
-        <!--
-            Añadir bloque de paginación paso a paso
-            https://vuetifyjs.com/en/components/steppers/
-        -->
     </v-container>
 
     <!-- Modal con los pasos para cambiar imagen -->
     <v-image-cropper-modal 
       :dialog="this.modal.dialog"
       v-on:modal_cropper_update_data="onChangeModalCropperData"
+      :originalImage="this.image.src"
+      :originalLazy="this.image.lazy"
+      :has_api="this.api.has_api"
+      :api_url="this.api.url"
+      :ratio="this.aspect_ratio"
+      :width="this.width"
       ></v-image-cropper-modal>
 
   </v-app>
 </template>
 
 <script>
-//https://www.npmjs.com/package/vuejs-clipper
-//https://timtnleeproject.github.io/vuejs-clipper/#/examples/quick-start
-//https://timtnleeproject.github.io/vuejs-clipper/#/examples/profile-photo
-
-//import Vue from 'vue'
-import 'vuejs-clipper';
-//import axios from 'axios';
-
-//import VueAxios from "vue-axios";
-
 export default {
-  props: [
-    'user_id',
-    'username',
-    'image'
-  ],
+  props: {
+    // Ruta hacia la imagen con la que se comienza.
+    image_path: {
+      required: false,
+      default: null
+    },
+
+    image_lazy_path: {
+      required: false,
+      default: null
+    },
+
+    // Nombre del campo input dónde se almacenará la imagen..
+    input_name: {
+      required: false,
+      default: 'image-cropped'
+    },
+
+    // Api URL
+    api_url: {
+      required: false,
+      default: null
+    },
+
+    // El ancho en píxeles para la imagen resultante.
+    width: {
+      required: false,
+      default: 400
+    },
+
+    // Las proporciones 1, 3/4, 16:9, 21:9...
+    aspect_ratio: {
+      required: false,
+      default: 1
+    },
+
+    // El ancho del icono para previsualizar en píxeles o porcentaje.
+    preview_width: {
+      required: false,
+      default: 100
+    },
+  },
   created() {
     //
   },
   mounted() {
     console.log('Component mounted');
+
+    if (this.image_path) {
+      this.image.src = this.image_path;
+    }
+
+    if (this.image_lazy_path) {
+      this.image.lazy = this.image_lazy_path;
+    }
+
+    if (this.api_url) {
+      this.api.has_upload = true;
+      this.api.url = this.api_url;
+    }
   },
   data () {
     return {
-      show: false,
-      msgStep1: 'Así se ve tu imagen actual, puedes subir una nueva.',
-      msgStep2:
-          'Mueve la imagen para centrarla, puedes hacer scroll ' +
-          'para aumentar o disminuir su tamaño.',
-      imgURL: './assets/',
-      resultURL: '',
-      imgOriginal: this.image,
-      originalName: '',
-      rangeMin: 0,
-      rangeMax: 10,
-
-      // Atributos nuevos desde refactorización del componente.
       showModalButton: false, // Muestra el botón que llevará al modal.
+
+      inputValue: '',  // Valor del input
+
       modal: {
-        dialog: true,  // Indica si muestra el modal abierto.
+        dialog: false,  // Indica si muestra el modal abierto.
+      },
+      image: {
+        name: 'Default Image',
+        lazy: require('./assets/default_lazy.png'),
+        src: require('./assets/default_800x600.png')
+      },
+      api: {
+        has_upload: false,
+        url: null,
       }
     }
   },
   methods: {
-      toggleModal: function () {
-        this.modal.dialog = !this.modal.dialog;
-        
-        console.log('Al abrir modal:');
-        console.log(this.modal);
-      },
-      onChangeModalCropperData: function (data) {
-        this.modal = data;
-        
-        console.log('Al cambiar datos del modal:');
-        console.log(this.modal);
-      },
-      /*
-      getResult: function () {
-          console.log('getResult');
-          const canvas = this.$refs.clipper.clip();  //call component's clip method
-          this.resultURL = canvas.toDataURL("image/jpeg", 1);  //canvas->image
-          this.uploadImage();
-      },
-      uploadImage: async function() {
-          console.log('uploadImage');
-          axios.post(
-              '/panel/user/ajax/avatar/upload',
-              {
-                  image: this.resultURL,
-                  user_id: this.user_id
-              }
-          ).then(response => {
-              if (!response.data.error) {
-                  console.log(response);
-                  this.imgOriginal = response.data.data.new_image;
-              }
-          });
+    toggleModal: function () {
+      this.modal.dialog = !this.modal.dialog;
+      
+      console.log('Al abrir modal:');
+      console.log(this.modal);
+    },
 
-          // Cierro el modal
-          this.$bvModal.hide('v-modal-avatar-image-crop');
-      },
-      */
+    onChangeModalCropperData: function (data) {
+      this.modal = data;
+      
+      console.log('Al cambiar datos del modal:');
+      console.log(this.modal);
 
-      /**
-       * Cuando se carga correctamente la imagen.
-       */
-      /*
-      load: function() {
-          let step1 = document.getElementsByClassName('my-clipper-step1')[0];
-          let step2 = document.getElementsByClassName('my-clipper-step2')[0];
-
-          let boxError = document.getElementById('my-cropper-upload-errors');
-
-          if (step1 && step2) {
-              console.log(step1);
-              step1.setAttribute('hidden', 'true');
-              step2.removeAttribute('hidden');
-
-              boxError.setAttribute('class', 'hidden');
-
-          }
-      },
-      */
-
-      /**
-       * Cuando no se carga la imagen o es otro tipo de archivo.
-       */
-      /*
-      error: function() {
-          //let step1 = document.getElementsByClassName('my-clipper-step1')[0];
-          //let step2 = document.getElementsByClassName('my-clipper-step2')[0];
-
-          let boxError = document.getElementById('my-cropper-upload-errors');
-
-          boxError.removeAttribute('hidden');
-      },
-      back: function() {
-          let step1 = document.getElementsByClassName('my-clipper-step1')[0];
-          let step2 = document.getElementsByClassName('my-clipper-step2')[0];
-
-          step2.setAttribute('hidden', 'true');
-          step1.removeAttribute('hidden');
+      if (data.image) {
+        this.image.src = data.image;
+        this.inputValue = data.image;
       }
-      */
+
+      if (data.name) {
+        this.image.name = data.name;
+      }
+    },
   },
  /*
  computed() {
@@ -207,11 +191,11 @@ export default {
    }
  },
  */
- filters: {
+  filters: {
     roundTo2Decimals(num) {
       return Math.round(num * 100) / 100;
     }
- }
+  }
 };
 </script>
 
@@ -232,7 +216,7 @@ v-app {
 }
 .avatar-icon {
   left: auto;
-  bottom: 5px;
+  bottom: 5px !important;
   height: 25px;
   width: 25px;
 }

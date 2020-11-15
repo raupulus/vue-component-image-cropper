@@ -33,95 +33,126 @@
         </v-toolbar>
         
 
-        <v-stepper v-model="e1">
+        <v-stepper v-model="current_step">
           <v-stepper-header>
             <v-stepper-step
-              :complete="e1 > 1"
+              :complete="current_step > 1"
               step="1"
             >
-              Nombre del paso 1
+              Previsualización de imagen actual
             </v-stepper-step>
 
             <v-divider></v-divider>
 
             <v-stepper-step
-              :complete="e1 > 2"
+              :complete="current_step > 2"
               step="2"
             >
-              Nombre del paso 2
-            </v-stepper-step>
-
-            <v-divider></v-divider>
-
-            <v-stepper-step step="3">
-              Nombre del paso 3
+              Seleccionar imagen
             </v-stepper-step>
           </v-stepper-header>
 
           <v-stepper-items>
+
+            <!--Paso 1-->
             <v-stepper-content step="1">
-              <v-card
-                class="mb-12"
-                color="grey lighten-1"
-                height="200px"
-              ></v-card>
+              <v-card class="mb-12">
 
-              <v-btn
-                color="primary"
-                @click="e1 = 2"
-              >
-                Siguiente
-              </v-btn>
+                <v-row>
+                  <v-col class="align-center" cols="6">  
+                    <v-img class="margin-auto"
+                            contain
+                            fab
+                            :lazy-src="this.originalLazy"
+                            max-width="500"
+                            :src="this.originalImage"
+                          ></v-img>
+                  </v-col>
 
-              <v-btn text @click="closeModal">
-                Cerrar
-              </v-btn>
+                  <v-col class="align-center" cols="6">
+                    <v-img class="margin-auto rounded-circle"
+                            :lazy-src="this.originalLazy"
+                            max-width="500"
+                            :src="this.originalImage"
+                          ></v-img>
+                  </v-col>
+                </v-row>
+
+                <v-row>
+                  <v-col id="my-cropper-upload-errors" 
+                         cols="12" 
+                         class="text-center">
+                      Tienes que seleccionar una imágen válida en
+                      formato png, jpg o gif.
+                  </v-col>
+
+                  <v-col class="align-center" cols="12">
+                    <v-btn>
+                        <clipper-upload v-model="selectImage">
+                            Seleccionar nueva imagen
+                        </clipper-upload>
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </v-card>
+
             </v-stepper-content>
 
+            <!-- Paso 2 -->
             <v-stepper-content step="2">
-              <v-card
-                class="mb-12"
-                color="grey lighten-1"
-                height="200px"
-              ></v-card>
+               <v-card class="mb-12">
 
-              <v-btn
-                color="primary"
-                @click="e1 += 1"
-              >
-                Siguiente
-              </v-btn>
+                <v-row justify="center">
+                  <v-col xs="8" sm="10" md="3" align-self="center">
+                    <clipper-fixed class="my-clipper"
+                                    ref="clipper"
+                                    :src="selectImage"
+                                    @load="load"
+                                    @error="error"
+                                    :round="round"
+                                    :ratio="ratio"
+                                    preview="my-preview">
+                        <div class="placeholder" slot="placeholder">
+                            Selecciona una Imagen
+                        </div>
+                    </clipper-fixed>
+                  </v-col>
 
-              <v-btn text @click="e1 -= 1">
-                Atrás
-              </v-btn>
+                  <v-col xs="8" sm="10" md="3" align-self="center">
+                    <clipper-preview name="my-preview"
+                                     class="my-clipper my-clipper-rounded">
+                        <div class="placeholder" slot="placeholder">
+                            Previsualización 1
+                        </div>
+                    </clipper-preview>
+                  </v-col>
 
-              <v-btn text @click="closeModal">
-                Cerrar
-              </v-btn>
-            </v-stepper-content>
+                  <v-col xs="8" sm="10" md="3" align-self="center">
+                    <clipper-preview name="my-preview"
+                                     class="my-clipper">
+                        <div class="placeholder" slot="placeholder">
+                            Previsualización 2
+                        </div>
+                    </clipper-preview>
+                  </v-col>
+                </v-row>
+              </v-card>
 
-            <v-stepper-content step="3">
-              <v-card
-                class="mb-12"
-                color="grey lighten-1"
-                height="200px"
-              ></v-card>
 
-              <v-btn
-                color="primary"
-                @click="save"
-              >
-                Guardar
-              </v-btn>
+              <v-row class="align-center" justify="center">
+                <v-col cols="12" align-self="center">
+                  <v-btn text @click="current_step -= 1">
+                    Atrás
+                  </v-btn>
 
-              <v-btn text @click="e1 -= 1">
-                Atrás
-              </v-btn>
-
-              <v-btn text @click="closeModal">
-                Cerrar
-              </v-btn>
+                  <v-btn
+                    color="primary"
+                    @click="save"
+                  >
+                    Guardar
+                  </v-btn>
+                </v-col>
+              </v-row>
             </v-stepper-content>
           </v-stepper-items>
         </v-stepper>
@@ -134,15 +165,72 @@
 <script>
   export default {
     props: {
+      // Indica si el modal está abierto.
       dialog: {
         type: Boolean,
         required: false,
         default: false
       },
+
+      // Imagen con la que se comienza.
+      originalImage: {
+        required: true
+      },
+
+      // Nombre de la imagen original.
+      originalName: {
+        required: false,
+        default: ''
+      },
+
+      // Miniatura mientras carga la imagen.
+      originalLazy: {
+        required: false,
+        default: '../assets/default_lazy.png'
+      },
+
+      // Indica el ancho, la altura se calcula según relación de aspecto.
+      width: {
+        type: Number,
+        required: false,
+        default: 400
+      }, 
+
+      // Indica la relación de aspecto 1, 4/3, 16:9, 21:9....
+      ratio: {
+        type: Number,
+        required: false,
+        default: 1
+      },
+
+      // Indica si el selector de recorte será redondo.
+      round: {
+        type: Boolean,
+        required: false,
+        default: false
+      },
+
+      // Indica si se subirá a una api.
+      has_api: {
+        type: Boolean,
+        required: false,
+        default: false
+      },
+
+      // Contiene la dirección de la api.
+      api_url: {
+        type: String,
+        required: false,
+        default: null
+      }
     },
     data () {
       return {
-        e1: 1, // Almacena el paso del menú actual
+        current_step: 1, // Almacena el paso del menú actual.
+        showErrors: false, // Indica si muestra errores
+        selectImage: '',  // Imagen seleccionada.
+        resultImage: '',  // Almacena la imagen como resultado.
+        resultName: '',  // Almacena el nombre original de la imagen subida.
       }
     },
     methods: {
@@ -150,22 +238,86 @@
        * Lanza el evento al padre con los datos del modal actualizado.
        */
       eventUpdateData() {
-         let data = {dialog: !this.dialog}
+         let data = {
+           dialog: !this.dialog,
+           image: this.resultImage,
+           name: this.resultName,
+         };
+
          this.$emit('modal_cropper_update_data', data);
       },
       /**
        * Cierra el modal.
        */
       closeModal() {
+        this.current_step = 1;
         this.eventUpdateData();
       },
+
+      uploadImageToApi: async function() {
+          console.log('uploadImage');
+        /*      
+
+          axios.post(
+              '/panel/user/ajax/avatar/upload',
+              {
+                  image: this.resultURL,
+                  user_id: this.user_id
+              }
+          ).then(response => {
+              if (!response.data.error) {
+                  console.log(response);
+                  this.imgOriginal = response.data.data.new_image;
+              }
+          });
+        */
+      },
+
       /**
        * Procesa el guardado de la imagen en el servidor.
        */
       save() {
-        // TODO → Procesar guardado
+        console.log('save()');
+
+        const clipper = this.$refs.clipper;
+
+        // Recorta la imagen fijando el ancho y por tanto proporción sobre este.
+        const canvas = clipper.clip({wPixel: this.width});
+
+        // La imagen que ha resultado.
+        this.resultImage = canvas.toDataURL("image/jpeg", 1);
+        
+        // El nombre de la imagen subida desde el cliente.
+        // TODO → Conseguir nombre del archivo original.
+        //this.resultName = canvas.
+        
+        console.log(canvas);
+        console.log(this.resultImage);
+        console.log(this.selectImage);
+
+        // Inicia la subida al servidor en caso de que proceda.
+        if (this.has_api) {
+          this.uploadImageToApi();
+        }
+
         this.closeModal();
-      }
+      },
+
+      /**
+       * Cuando se carga correctamente la imagen.
+       */
+      load() {
+        // Lleva al segundo paso.
+        this.current_step = 2;
+        this.showErrors = false;
+      },
+
+      /**
+       * Cuando no se carga la imagen o es otro tipo de archivo.
+       */
+      error() {
+          this.showErrors = true;  
+      },
    },
   }
 </script>
@@ -181,5 +333,26 @@
 
 .v-dialog__container {
   display: block;
+}
+
+.align-center {
+    text-align: center;
+}
+
+.margin-auto {
+  margin: auto;
+}
+
+#my-cropper-upload-errors {
+  color: #ff0000;
+}
+</style>
+
+<style lang="scss">
+.my-clipper-rounded,
+.my-clipper-rounded > div,
+.my-clipper-rounded > .wrap,
+.my-clipper-rounded .placeholder {
+  border-radius: 50%;
 }
 </style>
