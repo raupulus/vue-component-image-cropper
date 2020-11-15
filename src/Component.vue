@@ -14,7 +14,7 @@
                    >
                 <v-avatar
                 color="teal"
-                rounded
+                :rounded="!rounded"
                 height="100%"
                 :size="preview_width">
                     <img :src="image.src"
@@ -80,6 +80,13 @@
 <script>
 export default {
   props: {
+    // Indica si el avatar de previsualización es redondo.
+    rounded: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    
     // Ruta hacia la imagen con la que se comienza.
     image_path: {
       required: false,
