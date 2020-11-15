@@ -138,16 +138,21 @@
                 </v-row>
               </v-card>
 
-              <v-btn text @click="current_step -= 1">
-                Atrás
-              </v-btn>
 
-              <v-btn
-                color="primary"
-                @click="save"
-              >
-                Guardar
-              </v-btn>
+              <v-row class="align-center" justify="center">
+                <v-col cols="12" align-self="center">
+                  <v-btn text @click="current_step -= 1">
+                    Atrás
+                  </v-btn>
+
+                  <v-btn
+                    color="primary"
+                    @click="save"
+                  >
+                    Guardar
+                  </v-btn>
+                </v-col>
+              </v-row>
             </v-stepper-content>
           </v-stepper-items>
         </v-stepper>
@@ -305,32 +310,12 @@
         // Lleva al segundo paso.
         this.current_step = 2;
         this.showErrors = false;
-
-
-        /*  
-        let step1 = document.getElementsByClassName('my-clipper-step1')[0];
-        let step2 = document.getElementsByClassName('my-clipper-step2')[0];
-
-        let boxError = document.getElementById('my-cropper-upload-errors');
-
-        if (step1 && step2) {
-            console.log(step1);
-            step1.setAttribute('hidden', 'true');
-            step2.removeAttribute('hidden');
-
-            boxError.setAttribute('class', 'hidden');
-
-        }
-        */
       },
 
       /**
        * Cuando no se carga la imagen o es otro tipo de archivo.
        */
       error() {
-          console.log('error()');
-          // TODO → NO HACE CASO, MIRAR QUE OCURRE
-
           this.showErrors = true;  
       },
    },
