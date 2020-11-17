@@ -1,5 +1,5 @@
 <template>
-  <v-app justify="center">
+  <div justify="center">
     <v-dialog
       v-model="dialog"
       fullscreen
@@ -159,7 +159,7 @@
 
       </v-card>
     </v-dialog>
-  </v-app>
+  </div>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="v-component-image-cropper">
     
     <input type="hidden" :name="input_name" :value="inputValue"/>
 
@@ -207,16 +207,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-v-app {
-  background-color: red;
+.v-component-image-cropper {
+  //background-color: red;
+  margin: auto;
+  //min-height: 20px;
+}
+.v-component-image-cropper .v-application--wrap {
+  min-height: 20px !important;
 }
 
 .align-center {
-    text-align: center;
+  text-align: center;
 }
 
 .align-top {
-    vertical-align: top;
+  vertical-align: top;
 }
 .ml--15 {
   margin-left: -15px;
