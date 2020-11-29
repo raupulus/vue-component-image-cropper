@@ -186,7 +186,7 @@
       // Miniatura mientras carga la imagen.
       originalLazy: {
         required: false,
-        default: '../assets/default_lazy.png'
+        default: '@/assets/default_lazy.png'
       },
 
       // Indica el ancho, la altura se calcula según relación de aspecto.

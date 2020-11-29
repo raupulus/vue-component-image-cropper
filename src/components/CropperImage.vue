@@ -1,5 +1,5 @@
 <template>
-  <v-app class="v-component-image-cropper">
+  <div class="v-component-image-cropper">
     
     <input type="hidden" :name="input_name" :value="inputValue"/>
 
@@ -74,11 +74,12 @@
       :width="this.width"
       ></v-image-cropper-modal>
 
-  </v-app>
+  </div>
 </template>
 
 <script>
 export default {
+  name: 'CropperImage',
   props: {
     // Indica si el avatar de previsualización es redondo.
     rounded: {
@@ -158,8 +159,8 @@ export default {
       },
       image: {
         name: 'Default Image',
-        lazy: require('./assets/default_lazy.png'),
-        src: require('./assets/default_800x600.png')
+        lazy: require('@/assets/default_lazy.png'),
+        src: require('@/assets/default_800x600.png')
       },
       api: {
         has_upload: false,
@@ -207,6 +208,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../assets/tailwind.css";
+
 .v-component-image-cropper {
   //background-color: red;
   margin: auto;
