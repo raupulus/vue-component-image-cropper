@@ -1,35 +1,17 @@
 import Vue from 'vue'
-import vuetify from '@/plugins/vuetify' // path to vuetify export
-import VueRx from 'vue-rx'
-import Component from './Component.vue'
-import CropperModal from './components/CropperModal.vue';
-//import VueAxios from "vue-axios";
+import App from './App.vue'
+import router from './router'
+import store from './store'
 
-
-//https://www.npmjs.com/package/vuejs-clipper
-//https://timtnleeproject.github.io/vuejs-clipper/#/examples/quick-start
-//https://timtnleeproject.github.io/vuejs-clipper/#/examples/profile-photo
-
-import {
-  clipperBasic, 
-  clipperUpload, 
-  clipperFixed, 
-  clipperPreview, 
-  clipperRange
-} from 'vuejs-clipper';
+import VueTailwind from 'vue-tailwind'
+import settings from './plugins/tailwind-settings'
 
 Vue.config.productionTip = false
 
-Vue.component("clipper-basic", clipperBasic);
-Vue.component("clipper-upload", clipperUpload);
-Vue.component("clipper-fixed", clipperFixed);
-Vue.component("clipper-preview", clipperPreview);
-Vue.component("clipper-range", clipperRange);
-Vue.component("v-image-cropper-modal", CropperModal);
-
-Vue.use(VueRx);
+Vue.use(VueTailwind, settings)
 
 new Vue({
-  vuetify,
-  render: h => h(Component),
+  router,
+  store,
+  render: h => h(App)
 }).$mount('#app')
