@@ -18,6 +18,10 @@ import {
   clipperRange
 } from 'vuejs-clipper';
 
+//https://www.npmjs.com/package/vuejs-clipper
+//https://timtnleeproject.github.io/vuejs-clipper/#/examples/quick-start
+//https://timtnleeproject.github.io/vuejs-clipper/#/examples/profile-photo
+
 Vue.config.productionTip = false
 
 //Vue.use(VueTailwind, settings)
