@@ -3,6 +3,22 @@
     
     <input type="hidden" :name="input_name" :value="inputValue"/>
 
+    <div class="container mx-auto">
+      <div class="block"
+           @mouseover="showModalButton = true"
+           @mouseout="showModalButton = false"
+      >
+        <img :src="image.src"
+             :alt="image.name" 
+             class="mx-auto bg-black rounded-full"
+        />
+
+        <span class="-pt-30 cursor-pointer border border-gray-700 bg-gray-700 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-gray-800 focus:outline-none focus:shadow-outline">
+          Editar
+        </span>
+      </div>
+    </div>
+
     <v-container fill-height fluid>
         <v-row align="center" 
                justify="center"
