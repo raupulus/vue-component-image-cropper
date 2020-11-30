@@ -13,12 +13,19 @@
              class="mx-auto bg-black rounded-full"
         />
 
-        <span class="-pt-30 cursor-pointer border border-gray-700 bg-gray-700 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-gray-800 focus:outline-none focus:shadow-outline">
+        
+      </div>
+
+      <div class="block -mt-10">
+        <span class="-mt-8 cursor-pointer border border-gray-700 bg-gray-700 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-gray-800 focus:outline-none focus:shadow-outline"
+              @click="toggleModal"
+        >
           Editar
         </span>
       </div>
     </div>
 
+<!--
     <v-container fill-height fluid>
         <v-row align="center" 
                justify="center"
@@ -77,7 +84,7 @@
             </v-col>
         </v-row>
     </v-container>
-
+-->
     <!-- Modal con los pasos para cambiar imagen -->
     <v-image-cropper-modal 
       :dialog="this.modal.dialog"

@@ -1,10 +1,10 @@
 {
-  "name": "tailwind3",
+  "name": "vue-component-image-cropper",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build_origin": "vue-cli-service build",
+    "build_app": "vue-cli-service build",
     "build": "vue-cli-service build --report --target wc --inline-vue 'src/components/*'"
   },
   "dependencies": {
