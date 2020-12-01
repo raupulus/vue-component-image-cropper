@@ -1,24 +1,26 @@
 <template>
   <div class="v-component-image-cropper">
     
-    <input type="hidden" :name="input_name" :value="inputValue"/>
+    <input type="hidden" :name="input_name" :value="inputValue" />
 
-    <div class="container mx-auto">
-      <div class="block"
-           @mouseover="showModalButton = true"
+    <div class="w-auto mx-auto">
+      <div @mouseover="showModalButton = true"
            @mouseout="showModalButton = false"
+           @click="toggleModal"
+           class="cursor-pointer"
       >
         <img :src="image.src"
-             :alt="image.name" 
-             class="mx-auto bg-black rounded-full"
+            :alt="image.name" 
+            class="mx-auto bg-black"
+            :class="rounded ? 'rounded-full' : ''"
+            :width="preview_width"
         />
-
-        
       </div>
 
-      <div class="block -mt-10">
-        <span class="-mt-8 cursor-pointer border border-gray-700 bg-gray-700 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-gray-800 focus:outline-none focus:shadow-outline"
+      <div class="block -mt-11 cursor-pointer">
+        <span class="px-2 py-2 cursor-pointer transition transition-delay-1000 border border-yellow-800 bg-yellow-400 text-white rounded ease hover:bg-blue-300"
               @click="toggleModal"
+              v-show="showModalButton"
         >
           Editar
         </span>
@@ -108,7 +110,7 @@ export default {
     rounded: {
       type: Boolean,
       required: false,
-      default: false
+      default: true
     },
     
     // Ruta hacia la imagen con la que se comienza.

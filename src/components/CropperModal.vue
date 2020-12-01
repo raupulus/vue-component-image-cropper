@@ -1,6 +1,6 @@
 <template>
-  <div class="container mx-auto">
-    <div class="modal fixed w-full h-full top-0 left-0 flex items-center justify-center"
+  <div class="container mx-auto ">
+    <div class="modal fixed w-full h-full top-0 left-0 flex items-center justify-center transition duration-700"
          :class="dialog ? '' : 'opacity-0'"
          v-show="dialog"
     >
@@ -12,8 +12,8 @@
           
           <!-- Título -->
           <div class="flex justify-between items-center pb-3">
-            <div class="text-2xl font-bold w-full">
-              Título del modal
+            <div class="text-2xl font-bold w-full text-center">
+              Subir nueva imagen
             </div>
 
             <div class="modal-close cursor-pointer z-50 bg-indigo-400 hover:bg-indigo-300 p-2 rounded" 
@@ -31,22 +31,96 @@
 
           <!--Body-->
           <div>
-            Contenido
+            <!-- Step 1 -->
+            <div class="step1" v-show="current_step == 1">
+              <div class="w-full mx-auto flex">
+                  <div class="flex-1 p-2">  
+                    <img class="mx-auto bg-black"
+                         :src="this.originalImage"
+                    />
+                  </div>
+
+                  <div class="flex-1 p-2">
+                    <img class="mx-auto rounded-full bg-black"
+                         :src="this.originalImage"
+                    />
+                  </div>
+              </div>
+
+              <div class="w-full mx-auto">
+                  <div id="my-cropper-upload-errors" 
+                       class="text-center">
+                      Tienes que seleccionar una imágen válida en
+                      formato png, jpg o gif.
+                  </div>
+
+                  <div class="flex justify-center pt-2">
+                    <button class="cursor-pointer modal-close px-2 py-3 ring-4 ring-indigo-300 bg-indigo-500 rounded text-white hover:bg-indigo-400">
+                        <clipper-upload v-model="selectImage">
+                            Seleccionar nueva imagen
+                        </clipper-upload>
+                    </button>
+                  </div>
+              </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="step2" v-show="current_step == 2">
+              <div class="w-full mx-auto flex flex-col md:flex-row items-center justify-items-center">
+                  <div class="flex-1 p-2">  
+                    <clipper-fixed class="my-clipper mx-auto"
+                                    ref="clipper"
+                                    :src="selectImage"
+                                    @load="load"
+                                    @error="error"
+                                    :round="round"
+                                    :ratio="ratio"
+                                    preview="my-preview">
+                        <div class="placeholder" slot="placeholder">
+                            Selecciona una Imagen
+                        </div>
+                    </clipper-fixed>
+                  </div>
+
+                  <div class="flex-1 p-2">
+                    <clipper-preview name="my-preview"
+                                     class="my-clipper my-clipper-rounded mx-auto">
+                        <div class="placeholder" slot="placeholder">
+                            Previsualización 1
+                        </div>
+                    </clipper-preview>
+                  </div>
+
+                  <div class="flex-1 p-2">
+                    <clipper-preview name="my-preview"
+                                     class="my-clipper mx-auto">
+                        <div class="placeholder" slot="placeholder">
+                            Previsualización 2
+                        </div>
+                    </clipper-preview>
+                  </div>
+              </div>
+
+              <!-- Buttons -->
+              <div class="flex justify-center pt-2">
+                <button class="cursor-pointer px-4 bg-transparent p-3 rounded-lg text-indigo-500 hover:bg-gray-100 hover:text-indigo-400 mr-2"
+                        @click="current_step -= 1"
+                >
+                  Atrás
+                </button>
+                
+                <button class="cursor-pointer modal-close px-2 py-3 ring-4 ring-indigo-300 bg-indigo-500 rounded text-white hover:bg-indigo-400"
+                  @click="save"
+                >
+                  Guardar
+                </button>
+              </div>
+            </div>
           </div>
           
           <!--Footer-->
           <div class="flex justify-center pt-2">
-            <button class="cursor-pointer px-4 bg-transparent p-3 rounded-lg text-indigo-500 hover:bg-gray-100 hover:text-indigo-400 mr-2"
-                    @click="closeModal(); console.log('test1')"
-            >
-              Cerrar
-            </button>
             
-            <button class="cursor-pointer modal-close px-2 py-3 ring-4 ring-indigo-300 bg-indigo-500 rounded text-white hover:bg-indigo-400"
-              @click="closeModal(); console.log('test2')"
-            >
-              Guardar
-            </button>
           </div>
           
         </div>
@@ -216,36 +290,20 @@
 </script>
 
 <style lang="scss" scoped>
-.align-center {
-    text-align: center;
-}
+  #my-cropper-upload-errors {
+    color: #ff0000;
+  }
 
-.align-top {
-    vertical-align: top;
-}
-
-.v-dialog__container {
-  display: block;
-}
-
-.align-center {
-    text-align: center;
-}
-
-.margin-auto {
-  margin: auto;
-}
-
-#my-cropper-upload-errors {
-  color: #ff0000;
-}
+  .my-clipper {
+    max-width: 300px;
+  }
 </style>
 
 <style lang="scss">
-.my-clipper-rounded,
-.my-clipper-rounded > div,
-.my-clipper-rounded > .wrap,
-.my-clipper-rounded .placeholder {
-  border-radius: 50%;
-}
+  .my-clipper-rounded,
+  .my-clipper-rounded > div,
+  .my-clipper-rounded > .wrap,
+  .my-clipper-rounded .placeholder {
+    border-radius: 50%;
+  }
 </style>

@@ -1,6 +1,8 @@
 <template>
   <div class="home">
-    <v-component-image-cropper />
+    <div class="box-image-cropper">
+      <v-component-image-cropper preview_width="100" />
+    </div>
   </div>
 </template>
 
@@ -15,3 +17,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.box-image-cropper {
+  width: 100%;
+}
+</style>
