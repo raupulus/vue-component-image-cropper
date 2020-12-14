@@ -7,9 +7,6 @@ import store from './store'
 //import settings from './plugins/tailwind-settings'
 
 // Importo componentes de forma global
-import CropperModal from './components/CropperModal.vue'
-
-// Importo cropper y dependencias.
 
 import VueRx from 'vue-rx'
 
@@ -28,8 +25,6 @@ import {
 Vue.config.productionTip = false
 
 //Vue.use(VueTailwind, settings)
-Vue.component("v-image-cropper-modal", CropperModal);
-
 
 Vue.component("clipper-basic", clipperBasic);
 Vue.component("clipper-upload", clipperUpload);

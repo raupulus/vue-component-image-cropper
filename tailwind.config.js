@@ -2,7 +2,9 @@ module.exports = {
   purge: [
     './public/**/*.html',
     './src/**/*.vue',
+    './src/**/**/*.vue',
     './src/*.vue',
+    './src/assets/*.css',
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {

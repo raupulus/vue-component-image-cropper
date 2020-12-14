@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title>v-component-image-cropper demo</title>
+
+    <!-- rxjs-->
+    <script src="https://unpkg.com/rxjs/bundles/rxjs.umd.js"></script>
+    <!--vue-->
+    <script src="https://unpkg.com/vue"></script>
+    <!-- vue-rx-->
+    <script src="https://unpkg.com/vue-rx@6.2.0/dist/vue-rx.js"></script>
+    <!--vuejs-clipper script & style -->
+
+    <script src="https://unpkg.com/vuejs-clipper@3.1.1/dist/vuejs-clipper.umd.js"></script>
+
+    <script>
+        // install vue-rx
+        Vue.use(VueRx)
+        // install vuejs-clipper
+        //Vue.use(VuejsClipper)
+    </script>
+
+    <script src="./v-component-image-cropper.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+        <v-component-image-cropper></v-component-image-cropper>
+    </div>
+
+    <script>
+        // Quitar automontaje para montar aquí:
+        const app = new Vue({
+            el: '#app',
+        });
+    </script>
+  </body>
+</html>

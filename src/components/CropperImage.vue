@@ -27,84 +27,30 @@
       </div>
     </div>
 
-<!--
-    <v-container fill-height fluid>
-        <v-row align="center" 
-               justify="center"
-               no-gutters>
-            <v-col class="align-center" 
-                   cols="12"
-                   @mouseover="showModalButton = true"
-                   @mouseout="showModalButton = false"
-                   >
-                <v-avatar
-                color="teal"
-                :rounded="!rounded"
-                height="100%"
-                :size="preview_width">
-                    <img :src="image.src"
-                         :alt="image.name" />
-                        
-                    <v-scale-transition>
-                      <v-btn class="avatar-icon white--text"
-                            color="primary"
-                            fab
-                            dark
-                            absolute
-                            bottom
-                            left
-                            small
-                            v-show="!showModalButton"
-                            @click="toggleModal">
-                        <v-icon dark small>
-                            mdi-image-edit
-                        </v-icon>
-                      </v-btn>
-                    </v-scale-transition>
-
-                    <v-scale-transition>
-                      <v-btn color="primary"
-                            dark
-                            absolute
-                            bottom
-                            center
-                            elevation="3"
-                            small
-                            v-show="showModalButton"
-                            @click="toggleModal">
-                          <v-icon dark small>
-                              mdi-image-edit
-                          </v-icon>
-
-                            <span>
-                              Editar
-                            </span>
-                      </v-btn>
-                    </v-scale-transition>
-
-                </v-avatar>
-            </v-col>
-        </v-row>
-    </v-container>
--->
     <!-- Modal con los pasos para cambiar imagen -->
     <v-image-cropper-modal 
-      :dialog="this.modal.dialog"
+      :dialog="modal.dialog"
       v-on:modal_cropper_update_data="onChangeModalCropperData"
-      :originalImage="this.image.src"
-      :originalLazy="this.image.lazy"
-      :has_api="this.api.has_api"
-      :api_url="this.api.url"
-      :ratio="this.aspect_ratio"
-      :width="this.width"
+      :originalImage="image.src"
+      :originalLazy="image.lazy"
+      :has_api="api.has_api"
+      :api_url="api.url"
+      :ratio="aspect_ratio"
+      :width="width"
       ></v-image-cropper-modal>
 
   </div>
 </template>
 
 <script>
+
+import CropperModal from './CropperModal.vue'
+
 export default {
   name: 'CropperImage',
+  components: {
+    'v-image-cropper-modal': CropperModal
+  },
   props: {
     // Indica si el avatar de previsualización es redondo.
     rounded: {
@@ -184,8 +130,8 @@ export default {
       },
       image: {
         name: 'Default Image',
-        lazy: require('@/assets/default_lazy.png'),
-        src: require('@/assets/default_800x600.png')
+        lazy: require('../assets/default_lazy.png'),
+        src: require('../assets/default_800x600.png')
       },
       api: {
         has_upload: false,
@@ -233,12 +179,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/tailwind.css";
+@import '../assets/tailwind.css';
 
 .v-component-image-cropper {
-  //background-color: red;
   margin: auto;
-  //min-height: 20px;
 }
 .v-component-image-cropper .v-application--wrap {
   min-height: 20px !important;

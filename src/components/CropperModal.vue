@@ -36,20 +36,19 @@
               <div class="w-full mx-auto flex">
                   <div class="flex-1 p-2">  
                     <img class="mx-auto bg-black"
-                         :src="this.originalImage"
+                         :src="originalImage"
                     />
                   </div>
 
                   <div class="flex-1 p-2">
                     <img class="mx-auto rounded-full bg-black"
-                         :src="this.originalImage"
+                         :src="originalImage"
                     />
                   </div>
               </div>
 
               <div class="w-full mx-auto">
-                  <div id="my-cropper-upload-errors" 
-                       class="text-center">
+                  <div class="my-cropper-upload-errors text-center">
                       Tienes que seleccionar una imágen válida en
                       formato png, jpg o gif.
                   </div>
@@ -131,6 +130,7 @@
 
 <script>
   export default {
+    name: 'CropperImageModal',
     props: {
       // Indica si el modal está abierto.
       dialog: {
@@ -221,7 +221,7 @@
         this.eventUpdateData();
       },
 
-      uploadImageToApi: async function() {
+      uploadImageToApi: function() {
           console.log('uploadImage');
         /*      
 
@@ -290,7 +290,7 @@
 </script>
 
 <style lang="scss" scoped>
-  #my-cropper-upload-errors {
+  .my-cropper-upload-errors {
     color: #ff0000;
   }
 
