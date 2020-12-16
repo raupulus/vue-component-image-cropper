@@ -1,5 +1,7 @@
 import CropperModal from './components/CropperModal.vue';
 import CropperImage from './components/CropperImage.vue';
+import VueRx from 'vue-rx'
+import VuejsClipper from 'vuejs-clipper'
 
 // Declare install function executed by Vue.use()
 export function install(Vue) {
@@ -12,6 +14,7 @@ export function install(Vue) {
 // Create module definition for Vue.use()
 const plugin = {
   install,
+  VueRx,
 };
 
 // Auto-install when vue is found (eg. in browser via <script> tag)
@@ -24,6 +27,16 @@ if (typeof window !== 'undefined') {
 
 if (GlobalVue) {
   GlobalVue.use(plugin);
+
+  GlobalVue.use(VuejsClipper, {
+    components: {
+      //clipperBasic: true,
+      clipperUpload: true,
+      clipperFixed: true,
+      clipperPreview: true,
+      //clipperRange: true,
+    }
+  })
 }
 
 // To allow use as module (npm/webpack/etc.) export component

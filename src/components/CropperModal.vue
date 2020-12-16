@@ -1,6 +1,5 @@
 <template>
-  <div class="container mx-auto ">
-    <div class="modal fixed w-full h-full top-0 left-0 flex items-center justify-center transition duration-700"
+    <div class="v-component-image-cropper-modal modal fixed absolute inset-x-0 shadow-xl w-full h-full top-0 left-0 flex items-center justify-center transition duration-700"
          :class="dialog ? '' : 'opacity-0'"
          v-show="dialog"
     >
@@ -125,7 +124,6 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -290,6 +288,12 @@
 </script>
 
 <style lang="scss" scoped>
+  .v-component-image-cropper-modal {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+  }
+
   .my-cropper-upload-errors {
     color: #ff0000;
   }
@@ -297,6 +301,8 @@
   .my-clipper {
     max-width: 300px;
   }
+
+  
 </style>
 
 <style lang="scss">

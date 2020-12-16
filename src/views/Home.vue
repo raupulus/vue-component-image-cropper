@@ -18,8 +18,6 @@ export default {
 }
 </script>
 
+
 <style scoped>
-.box-image-cropper {
-  width: 100%;
-}
 </style>

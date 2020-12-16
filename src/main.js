@@ -9,7 +9,8 @@ import store from './store'
 // Importo componentes de forma global
 
 import VueRx from 'vue-rx'
-
+import VuejsClipper from 'vuejs-clipper'
+/*
 import {
   clipperBasic, 
   clipperUpload, 
@@ -17,6 +18,7 @@ import {
   clipperPreview, 
   clipperRange
 } from 'vuejs-clipper';
+*/
 
 //https://www.npmjs.com/package/vuejs-clipper
 //https://timtnleeproject.github.io/vuejs-clipper/#/examples/quick-start
@@ -26,13 +28,26 @@ Vue.config.productionTip = false
 
 //Vue.use(VueTailwind, settings)
 
+/*
+
 Vue.component("clipper-basic", clipperBasic);
 Vue.component("clipper-upload", clipperUpload);
 Vue.component("clipper-fixed", clipperFixed);
 Vue.component("clipper-preview", clipperPreview);
 Vue.component("clipper-range", clipperRange);
+*/
 
 Vue.use(VueRx);
+
+Vue.use(VuejsClipper, {
+  components: {
+    //clipperBasic: true,
+    clipperUpload: true,
+    clipperFixed: true,
+    clipperPreview: true,
+    //clipperRange: true,
+  }
+})
 
 new Vue({
   router,

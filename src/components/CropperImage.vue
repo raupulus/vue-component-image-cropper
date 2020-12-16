@@ -3,27 +3,28 @@
     
     <input type="hidden" :name="input_name" :value="inputValue" />
 
-    <div class="w-auto mx-auto">
-      <div @mouseover="showModalButton = true"
-           @mouseout="showModalButton = false"
+    <div class="w-auto mx-auto center"  
+         @mouseover="showModalButton = true"
+         @mouseout="showModalButton = false">
+      <div class="cursor-pointer"
            @click="toggleModal"
-           class="cursor-pointer"
       >
         <img :src="image.src"
             :alt="image.name" 
-            class="mx-auto bg-black"
+            class="mx-auto bg-black border-2 border-black shadow-md"
             :class="rounded ? 'rounded-full' : ''"
             :width="preview_width"
         />
       </div>
 
-      <div class="block -mt-11 cursor-pointer">
-        <span class="px-2 py-2 cursor-pointer transition transition-delay-1000 border border-yellow-800 bg-yellow-400 text-white rounded ease hover:bg-blue-300"
-              @click="toggleModal"
-              v-show="showModalButton"
-        >
-          Editar
-        </span>
+      <div class="v-component-image-cropper-button-open-modal -mt-12 cursor-pointer center">
+          <svg class="icon-open-modal svg-icon cursor-pointer transition transition-delay-1000 rounded ease" 
+               viewBox="0 0 16 16"
+               @click="toggleModal"
+              :style="showModalButton ? 'opactiy: 1;' : 'opacity: 0;'">
+            <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+            <path fill-rule="evenodd" d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/>
+          </svg>
       </div>
     </div>
 
@@ -46,10 +47,26 @@
 
 import CropperModal from './CropperModal.vue'
 
+import {
+  clipperBasic, 
+  clipperUpload, 
+  clipperFixed, 
+  clipperPreview, 
+  clipperRange
+} from 'vuejs-clipper';
+
+import VueRx from 'vue-rx'
+
 export default {
   name: 'CropperImage',
   components: {
-    'v-image-cropper-modal': CropperModal
+    'v-image-cropper-modal': CropperModal,
+    //'clipper-basic': clipperBasic,
+    'clipper-upload': clipperUpload,
+    'clipper-fixed': clipperFixed,
+    'clipper-preview': clipperPreview,
+    //'clipper-range': clipperRange,
+    'VueRx': VueRx
   },
   props: {
     // Indica si el avatar de previsualización es redondo.
@@ -103,9 +120,7 @@ export default {
   created() {
     //
   },
-  mounted() {
-    console.log('Component mounted');
-
+  beforeMount() {
     if (this.image_path) {
       this.image.src = this.image_path;
     }
@@ -118,6 +133,9 @@ export default {
       this.api.has_upload = true;
       this.api.url = this.api_url;
     }
+  },
+  mounted() {
+    console.log('Component mounted');
   },
   data () {
     return {
@@ -183,9 +201,22 @@ export default {
 
 .v-component-image-cropper {
   margin: auto;
+  text-align: center;
+  width: 100%;
 }
+
 .v-component-image-cropper .v-application--wrap {
   min-height: 20px !important;
+}
+
+.v-component-image-cropper-button-open-modal .icon-open-modal {
+  display: block;
+  margin: -20px auto 0 auto;
+  padding: 8px !important;
+  width: 45px;
+  background-color: #fff;
+  border: 4px solid darkslategray;
+  border-radius: 9999px;
 }
 
 .align-center {
@@ -203,5 +234,9 @@ export default {
   bottom: 5px !important;
   height: 25px;
   width: 25px;
+}
+
+.rounded-full {
+  border-radius: 9999px;
 }
 </style>
