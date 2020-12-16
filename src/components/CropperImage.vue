@@ -61,11 +61,11 @@ export default {
   name: 'CropperImage',
   components: {
     'v-image-cropper-modal': CropperModal,
-    //'clipper-basic': clipperBasic,
+    'clipper-basic': clipperBasic,
     'clipper-upload': clipperUpload,
     'clipper-fixed': clipperFixed,
     'clipper-preview': clipperPreview,
-    //'clipper-range': clipperRange,
+    'clipper-range': clipperRange,
     'VueRx': VueRx
   },
   props: {

@@ -1,5 +1,5 @@
 <template>
-    <div class="v-component-image-cropper-modal modal fixed absolute inset-x-0 shadow-xl w-full h-full top-0 left-0 flex items-center justify-center transition duration-700"
+    <div class="v-component-image-cropper-modal modal shadow-xl w-full h-full top-0 left-0 flex items-center justify-center transition duration-700"
          :class="dialog ? '' : 'opacity-0'"
          v-show="dialog"
     >
@@ -292,6 +292,7 @@
     position: fixed !important;
     top: 0;
     left: 0;
+    z-index: 9999999999;
   }
 
   .my-cropper-upload-errors {
