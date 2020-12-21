@@ -174,14 +174,12 @@
 
       // Indica el ancho, la altura se calcula según relación de aspecto.
       width: {
-        type: Number,
         required: false,
         default: 400
       }, 
 
       // Indica la relación de aspecto 1, 4/3, 16:9, 21:9....
       ratio: {
-        type: Number,
         required: false,
         default: 1
       },
