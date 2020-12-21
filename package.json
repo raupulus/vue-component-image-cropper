@@ -6,14 +6,14 @@
   "module": "dist/v-component-image-cropper.esm.js",
   "unpkg": "dist/v-component-image-cropper.min.js",
   "browser": {
-    "./sfc": "src/components/CropperModal.vue"
+    "./sfc": "src/components/CropperImage.vue"
   },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build_app": "vue-cli-service build",
     "build_component": "vue-cli-service build --report --target wc-async --name v-cropper-image 'src/components/CropperImage.vue'",
-    "build_lib": "vue-cli-service build --report --target lib --name lib-image-cropper 'src/components/CropperImage.vue'",
-    "build": "npm run build_lib & npm run build_component",
+    "build_lib": "vue-cli-service build --report --target lib --name CropperImage 'src/components/CropperImage.vue'",
+    "build": "npm run build_lib",
     "build_rollup": "npm run build:umd & npm run build:es & npm run build:unpkg",
     "build:umd": "rollup --config build/rollup.config.js --format umd --file dist/v-component-image-cropper.umd.js",
     "build:es": "rollup --config build/rollup.config.js --format es --file dist/v-component-image-cropper.esm.js",
