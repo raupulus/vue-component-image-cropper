@@ -1,110 +1,72 @@
 <template>
-  <v-app justify="center">
-    <v-dialog
-      v-model="dialog"
-      fullscreen
-      hide-overlay
-      transition="dialog-bottom-transition"
+    <div class="v-component-image-cropper-modal modal shadow-xl w-full h-full top-0 left-0 flex items-center justify-center transition duration-700"
+         :class="dialog ? '' : 'opacity-0'"
+         v-show="dialog"
     >
+      <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
       
-      <v-card>
-        <v-toolbar
-          dark
-          color="primary"
-        >
-          <v-btn
-            icon
-            dark
-            @click="closeModal"
-          >
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-          <v-toolbar-title>Subir imagen</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-toolbar-items>
-            <v-btn
-              dark
-              text
-              @click="closeModal"
-            >
-              Cerrar
-            </v-btn>
-          </v-toolbar-items>
-        </v-toolbar>
-        
+      <div class="modal-container bg-white w-screen h-screen mx-auto rounded shadow-lg z-50 overflow-y-auto">
+        <!-- Add margin if you want to see some of the overlay behind the modal-->
+        <div class="modal-content py-4 text-left px-6">
+          
+          <!-- Título -->
+          <div class="flex justify-between items-center pb-3">
+            <div class="text-2xl font-bold w-full text-center">
+              Subir nueva imagen
+            </div>
 
-        <v-stepper v-model="current_step">
-          <v-stepper-header>
-            <v-stepper-step
-              :complete="current_step > 1"
-              step="1"
-            >
-              Previsualización de imagen actual
-            </v-stepper-step>
+            <div class="modal-close cursor-pointer z-50 bg-indigo-400 hover:bg-indigo-300 p-2 rounded" 
+                 @click="closeModal();">
+              <svg class="fill-current text-white" 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  width="22" 
+                  height="22" 
+                  viewBox="0 0 18 18"
+              >
+                <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+              </svg>
+            </div>
+          </div>
 
-            <v-divider></v-divider>
+          <!--Body-->
+          <div>
+            <!-- Step 1 -->
+            <div class="step1" v-show="current_step == 1">
+              <div class="w-full mx-auto flex">
+                  <div class="flex-1 p-2">  
+                    <img class="mx-auto bg-black"
+                         :src="originalImage"
+                    />
+                  </div>
 
-            <v-stepper-step
-              :complete="current_step > 2"
-              step="2"
-            >
-              Seleccionar imagen
-            </v-stepper-step>
-          </v-stepper-header>
+                  <div class="flex-1 p-2">
+                    <img class="mx-auto rounded-full bg-black"
+                         :src="originalImage"
+                    />
+                  </div>
+              </div>
 
-          <v-stepper-items>
-
-            <!--Paso 1-->
-            <v-stepper-content step="1">
-              <v-card class="mb-12">
-
-                <v-row>
-                  <v-col class="align-center" cols="6">  
-                    <v-img class="margin-auto"
-                            contain
-                            fab
-                            :lazy-src="this.originalLazy"
-                            max-width="500"
-                            :src="this.originalImage"
-                          ></v-img>
-                  </v-col>
-
-                  <v-col class="align-center" cols="6">
-                    <v-img class="margin-auto rounded-circle"
-                            :lazy-src="this.originalLazy"
-                            max-width="500"
-                            :src="this.originalImage"
-                          ></v-img>
-                  </v-col>
-                </v-row>
-
-                <v-row>
-                  <v-col id="my-cropper-upload-errors" 
-                         cols="12" 
-                         class="text-center">
+              <div class="w-full mx-auto">
+                  <div class="my-cropper-upload-errors text-center">
                       Tienes que seleccionar una imágen válida en
                       formato png, jpg o gif.
-                  </v-col>
+                  </div>
 
-                  <v-col class="align-center" cols="12">
-                    <v-btn>
+                  <div class="flex justify-center pt-2">
+                    <button class="cursor-pointer modal-close px-2 py-3 ring-4 ring-indigo-300 bg-indigo-500 rounded text-white hover:bg-indigo-400">
                         <clipper-upload v-model="selectImage">
                             Seleccionar nueva imagen
                         </clipper-upload>
-                    </v-btn>
-                  </v-col>
-                </v-row>
-              </v-card>
+                    </button>
+                  </div>
+              </div>
+            </div>
 
-            </v-stepper-content>
-
-            <!-- Paso 2 -->
-            <v-stepper-content step="2">
-               <v-card class="mb-12">
-
-                <v-row justify="center">
-                  <v-col xs="8" sm="10" md="3" align-self="center">
-                    <clipper-fixed class="my-clipper"
+            <!-- Step 2 -->
+            <div class="step2" v-show="current_step == 2">
+              <div class="w-full mx-auto flex flex-col md:flex-row items-center justify-items-center">
+                  <div class="flex-1 p-2">  
+                    <clipper-fixed class="my-clipper mx-auto"
                                     ref="clipper"
                                     :src="selectImage"
                                     @load="load"
@@ -116,54 +78,75 @@
                             Selecciona una Imagen
                         </div>
                     </clipper-fixed>
-                  </v-col>
+                  </div>
 
-                  <v-col xs="8" sm="10" md="3" align-self="center">
+                  <div class="flex-1 p-2">
                     <clipper-preview name="my-preview"
-                                     class="my-clipper my-clipper-rounded">
+                                     class="my-clipper my-clipper-rounded mx-auto">
                         <div class="placeholder" slot="placeholder">
                             Previsualización 1
                         </div>
                     </clipper-preview>
-                  </v-col>
+                  </div>
 
-                  <v-col xs="8" sm="10" md="3" align-self="center">
+                  <div class="flex-1 p-2">
                     <clipper-preview name="my-preview"
-                                     class="my-clipper">
+                                     class="my-clipper mx-auto">
                         <div class="placeholder" slot="placeholder">
                             Previsualización 2
                         </div>
                     </clipper-preview>
-                  </v-col>
-                </v-row>
-              </v-card>
+                  </div>
+              </div>
 
-
-              <v-row class="align-center" justify="center">
-                <v-col cols="12" align-self="center">
-                  <v-btn text @click="current_step -= 1">
-                    Atrás
-                  </v-btn>
-
-                  <v-btn
-                    color="primary"
-                    @click="save"
-                  >
-                    Guardar
-                  </v-btn>
-                </v-col>
-              </v-row>
-            </v-stepper-content>
-          </v-stepper-items>
-        </v-stepper>
-
-      </v-card>
-    </v-dialog>
-  </v-app>
+              <!-- Buttons -->
+              <div class="flex justify-center pt-2">
+                <button class="cursor-pointer px-4 bg-transparent p-3 rounded-lg text-indigo-500 hover:bg-gray-100 hover:text-indigo-400 mr-2"
+                        @click="current_step -= 1"
+                >
+                  Atrás
+                </button>
+                
+                <button class="cursor-pointer modal-close px-2 py-3 ring-4 ring-indigo-300 bg-indigo-500 rounded text-white hover:bg-indigo-400"
+                  @click="save"
+                >
+                  Guardar
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <!--Footer-->
+          <div class="flex justify-center pt-2">
+            
+          </div>
+          
+        </div>
+      </div>
+    </div>
 </template>
 
 <script>
+  import VueRx from 'vue-rx'
+
+  import {
+    //clipperBasic, 
+    clipperUpload, 
+    clipperFixed, 
+    clipperPreview, 
+    //clipperRange
+  } from 'vuejs-clipper';
+
   export default {
+    name: 'CropperImageModal',
+    components: {
+      'VueRx': VueRx,
+      //'clipper-basic': clipperBasic,
+      'clipper-upload': clipperUpload,
+      'clipper-fixed': clipperFixed,
+      'clipper-preview': clipperPreview,
+      //'clipper-range': clipperRange,
+    },
     props: {
       // Indica si el modal está abierto.
       dialog: {
@@ -186,7 +169,7 @@
       // Miniatura mientras carga la imagen.
       originalLazy: {
         required: false,
-        default: '../assets/default_lazy.png'
+        default: '@/assets/default_lazy.png'
       },
 
       // Indica el ancho, la altura se calcula según relación de aspecto.
@@ -254,7 +237,7 @@
         this.eventUpdateData();
       },
 
-      uploadImageToApi: async function() {
+      uploadImageToApi: function() {
           console.log('uploadImage');
         /*      
 
@@ -323,36 +306,29 @@
 </script>
 
 <style lang="scss" scoped>
-.align-center {
-    text-align: center;
-}
+  .v-component-image-cropper-modal {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    z-index: 9999999999;
+  }
 
-.align-top {
-    vertical-align: top;
-}
+  .my-cropper-upload-errors {
+    color: #ff0000;
+  }
 
-.v-dialog__container {
-  display: block;
-}
+  .my-clipper {
+    max-width: 300px;
+  }
 
-.align-center {
-    text-align: center;
-}
-
-.margin-auto {
-  margin: auto;
-}
-
-#my-cropper-upload-errors {
-  color: #ff0000;
-}
+  
 </style>
 
 <style lang="scss">
-.my-clipper-rounded,
-.my-clipper-rounded > div,
-.my-clipper-rounded > .wrap,
-.my-clipper-rounded .placeholder {
-  border-radius: 50%;
-}
+  .my-clipper-rounded,
+  .my-clipper-rounded > div,
+  .my-clipper-rounded > .wrap,
+  .my-clipper-rounded .placeholder {
+    border-radius: 50%;
+  }
 </style>
