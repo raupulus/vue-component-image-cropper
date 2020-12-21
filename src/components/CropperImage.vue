@@ -47,26 +47,10 @@
 
 import CropperModal from './CropperModal.vue'
 
-import {
-  clipperBasic, 
-  clipperUpload, 
-  clipperFixed, 
-  clipperPreview, 
-  clipperRange
-} from 'vuejs-clipper';
-
-import VueRx from 'vue-rx'
-
 export default {
   name: 'CropperImage',
   components: {
     'v-image-cropper-modal': CropperModal,
-    'clipper-basic': clipperBasic,
-    'clipper-upload': clipperUpload,
-    'clipper-fixed': clipperFixed,
-    'clipper-preview': clipperPreview,
-    'clipper-range': clipperRange,
-    'VueRx': VueRx
   },
   props: {
     // Indica si el avatar de previsualización es redondo.

@@ -9,7 +9,7 @@ import store from './store'
 // Importo componentes de forma global
 
 import VueRx from 'vue-rx'
-import VuejsClipper from 'vuejs-clipper'
+//import VuejsClipper from 'vuejs-clipper'
 /*
 import {
   clipperBasic, 
@@ -39,6 +39,7 @@ Vue.component("clipper-range", clipperRange);
 
 Vue.use(VueRx);
 
+/*
 Vue.use(VuejsClipper, {
   components: {
     //clipperBasic: true,
@@ -48,6 +49,7 @@ Vue.use(VuejsClipper, {
     //clipperRange: true,
   }
 })
+*/
 
 new Vue({
   router,
