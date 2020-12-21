@@ -130,22 +130,22 @@
   import VueRx from 'vue-rx'
 
   import {
-    clipperBasic, 
+    //clipperBasic, 
     clipperUpload, 
     clipperFixed, 
     clipperPreview, 
-    clipperRange
+    //clipperRange
   } from 'vuejs-clipper';
 
   export default {
     name: 'CropperImageModal',
     components: {
       'VueRx': VueRx,
-      'clipper-basic': clipperBasic,
+      //'clipper-basic': clipperBasic,
       'clipper-upload': clipperUpload,
       'clipper-fixed': clipperFixed,
       'clipper-preview': clipperPreview,
-      'clipper-range': clipperRange,
+      //'clipper-range': clipperRange,
     },
     props: {
       // Indica si el modal está abierto.

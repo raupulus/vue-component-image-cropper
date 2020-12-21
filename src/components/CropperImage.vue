@@ -12,7 +12,7 @@
         <img :src="image.src"
             :alt="image.name" 
             class="mx-auto bg-black border-2 border-black shadow-md"
-            :class="rounded ? 'rounded-full' : ''"
+            :style="rounded ? 'border-radius: 50%;' : ''"
             :width="preview_width"
         />
       </div>
@@ -45,11 +45,14 @@
 
 <script>
 
+import VueRx from 'vue-rx'
+
 import CropperModal from './CropperModal.vue'
 
 export default {
   name: 'CropperImage',
   components: {
+    'VueRx': VueRx,
     'v-image-cropper-modal': CropperModal,
   },
   props: {
