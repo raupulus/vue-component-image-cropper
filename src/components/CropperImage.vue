@@ -18,7 +18,7 @@
       </div>
 
       <div class="v-component-image-cropper-button-open-modal -mt-12 cursor-pointer center">
-          <svg class="icon-open-modal svg-icon cursor-pointer transition transition-delay-1000 rounded ease" 
+          <svg class="icon-open-modal svg-icon cursor-pointer transition transition-delay-1000 rounded rounded-full ease" 
                viewBox="0 0 16 16"
                @click="toggleModal"
               :style="showModalButton ? 'opactiy: 1;' : 'opacity: 0;'">
