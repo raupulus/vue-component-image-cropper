@@ -20,15 +20,15 @@
     "build:unpkg": "rollup --config build/rollup.config.js --format iife --file dist/v-component-image-cropper.min.js"
   },
   "dependencies": {
+    "vue": "^2.6.11"    
+  },
+  "devDependencies": {
     "core-js": "^3.8.1",
     "rxjs": "^6.6.3",
-    "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vue-rx": "^6.2.0",
     "vuejs-clipper": "^3.1.0",
-    "vuex": "^3.4.0"
-  },
-  "devDependencies": {
+    "vuex": "^3.4.0",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-router": "~4.5.0",
     "@vue/cli-plugin-vuex": "~4.5.0",
