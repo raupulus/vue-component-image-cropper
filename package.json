@@ -1,6 +1,6 @@
 {
   "name": "vue-component-image-cropper",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": false,
   "main": "dist/v-component-image-cropper.umd.js",
   "module": "dist/v-component-image-cropper.esm.js",
