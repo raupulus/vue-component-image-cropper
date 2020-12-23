@@ -1,4 +1,12 @@
-# Vue Image Cropper
+# Vue Image Cropper (WIP status)
+
+---
+
+This component is in beta phase.
+
+Will reach version 1.0.0 when you have an acceptable state for use.
+
+---
 
 This component helps cut out images by maintaining the proportions and leaving it in the size established based on the width (eg: 150px, 400px, 600px) 
 
@@ -23,34 +31,20 @@ Además permite almacenar el resultado en base64 dentro de un input con el nombr
 - [ ] Upload to API
 - [ ] Set enable API upload
 
-
-## Project setup
-```
-npm install
-```
-
-## Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-## Compiles and minifies for production
-```
-npm run build
-```
-
-## Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-
-## Http Project
+## Plain Html Project
 
 ```html
 <script src="https://unpkg.com/vue"></script>
 <script src="./CropperImage.umd.js"></script>
 
-
 <div id="app">
-  <v-cropper-image></v-cropper-image>
+  <v-cropper-image 
+    preview_width="150"
+    image_path="./images/example.jpg"
+    aspect_ratio="1/4"
+    input_name="user_avatar"
+    width="150"
+    ></v-cropper-image>
 </div>
 
 <script>
@@ -62,9 +56,19 @@ new Vue({
 </script>
 ```
 
-## Laravel
+## Laravel or JS Project
 
-```php
+```html
+<v-cropper-image 
+    preview_width="150"
+    image_path="./images/example.jpg"
+    aspect_ratio="1/4"
+    input_name="user_avatar"
+    width="150"
+    ></v-cropper-image>
+```
+
+```js
 require('vue-component-image-cropper/dist/CropperImage.umd.min.js');
 
 const app = new Vue({
