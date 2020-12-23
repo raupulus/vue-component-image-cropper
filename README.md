@@ -1,7 +1,5 @@
 # Vue Image Cropper (WIP status)
 
----
-
 This component is in beta phase.
 
 Will reach version 1.0.0 when you have an acceptable state for use.
@@ -14,9 +12,15 @@ Also allows to store the result on base64 within an input with the name we prede
 
 ---
 
+![Logotipo Debian](image-preview-1.png)
+![Logotipo Debian](image-preview-2.png)
+
+---
+
 Este componente ayuda a recortar imágenes manteniendo las proporciones y dejándola en el tamaño establecido en base al ancho (EJ: 150px, 400px, 600px)
 
 Además permite almacenar el resultado en base64 dentro de un input con el nombre que predefinamos o subirlo a una api.
+
 
 ## Features and Work In Progress
 
