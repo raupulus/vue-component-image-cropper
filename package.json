@@ -2,10 +2,25 @@
   "name": "vue-component-image-cropper",
   "version": "0.1.3",
   "private": false,
-  "homepage": "https://gitlab.com/fryntiz/vue-component-image-cropper",
+  "homepage": "https://gitlab.com/fryntiz/vue-component-image-cropper/-/blob/master/README.md",
   "url" : "https://gitlab.com/fryntiz/vue-component-image-cropper",
+  "author": "Raúl Caro Pastorino <raul@fryntiz.dev> (https://fryntiz.es)",
   "email" : "raul@fryntiz.dev",
   "license" : "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/fryntiz/vue-component-image-cropper"
+  },
+  "bugs": {
+    "url": "https://gitlab.com/fryntiz/vue-component-image-cropper/-/issues"
+  },
+  "keywords": [
+    "vue",
+    "component",
+    "image",
+    "crop",
+    "cropper"
+  ],
 
   "main": "dist/v-component-image-cropper.umd.js",
   "module": "dist/v-component-image-cropper.esm.js",
