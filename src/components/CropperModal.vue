@@ -211,9 +211,15 @@
         required: false,
         default: null
       },
-
+      
       // Id para relacionarlo en el backend de la api (usuario, slide, post...).
       api_id: {
+        required: false,
+        default: null
+      },
+      
+      // Token CSRF en caso de ser necesario.
+      csrf_token: {
         required: false,
         default: null
       },
@@ -255,6 +261,7 @@
         let url = this.api_url;
         let token = this.api_token;
         let id = this.api_id;
+        let csrf_token = this.csrf_token;
 
         this.loading = true;
 
@@ -265,9 +272,13 @@
 
         if (token) {
           params.headers = {
-            //'Content-Type': 'application/json',
+            'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + token
           };
+        }
+
+        if (csrf_token) {
+          params.headers['X-CSRF-TOKEN'] = csrf_token;
         }
 
 

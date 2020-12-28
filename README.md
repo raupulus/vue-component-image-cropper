@@ -36,6 +36,7 @@ Además permite almacenar el resultado en base64 dentro de un input con el nombr
 - [x] Set image name for alt and title (prop: name), optional.
 - [x] Upload to API → Experimental, for debug.
 - [x] Set enable API upload
+- [x] Set csrf token to API upload (prop: csrf_token)
 - [ ] Set Lazy Image path
 
 ## Plain Html Project

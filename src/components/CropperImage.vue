@@ -10,7 +10,8 @@
            @click="toggleModal"
       >
         <img :src="image.src"
-            :alt="image.name" 
+            :alt="image.name"
+            :title="image.name"
             :data-id="image.id"
             class="mx-auto bg-black border-2 border-black shadow-md"
             :style="rounded ? 'border-radius: 50%;' : ''"
@@ -39,6 +40,7 @@
       :api_url="api.url"
       :api_token="api.token"
       :api_id="api.id"
+      :csrf_token="csrf_token"
       :ratio="aspect_ratio"
       :width="width"
       ></v-image-cropper-modal>
@@ -101,6 +103,12 @@ export default {
       default: 0
     },
 
+    // Token CSRF en caso de ser necesario.
+    csrf_token: {
+        required: false,
+        default: null
+      },
+
     // Nombre para ser usado de alt y quizá de previsualización en el futuro
     name: {
       required: false,
@@ -134,7 +142,7 @@ export default {
     }
 
     if (this.name) {
-      this.image.src = this.name;
+      this.image.name = this.name;
     }
 
     if (this.image_lazy_path) {
