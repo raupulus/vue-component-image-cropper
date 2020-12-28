@@ -280,7 +280,7 @@
                 'Authorization': 'Bearer ' + token
               },
               image: this.resultURL,
-              user_id: id
+              id: id
             }
         ).then(response => {
           if (response.data.error) {
