@@ -12,8 +12,8 @@ Also allows to store the result on base64 within an input with the name we prede
 
 ---
 
-![Logotipo Debian](image-preview-1.png)
-![Logotipo Debian](image-preview-2.png)
+![Previsualización 1](./image-preview-1.png)
+![Previsualización 2](./image-preview-2.png)
 
 ---
 
