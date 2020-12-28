@@ -12,8 +12,8 @@ Also allows to store the result on base64 within an input with the name we prede
 
 ---
 
-![Previsualización 1](./image-preview-1.png)
-![Previsualización 2](./image-preview-2.png)
+![Previsualización 1](https://gitlab.com/fryntiz/vue-component-image-cropper/-/raw/master/image-preview-1.png)
+![Previsualización 2](https://gitlab.com/fryntiz/vue-component-image-cropper/-/raw/master/image-preview-2.png)
 
 ---
 
