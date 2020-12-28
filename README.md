@@ -31,9 +31,12 @@ Además permite almacenar el resultado en base64 dentro de un input con el nombr
 - [x] Set preview input name (prop: input_name)
 - [x] Set Aspect Ratio 1, 1/2, 1/4, 16/9, 21/9... (prop: aspect_ratio)
 - [x] Set API url (prop: api_url)
+- [x] Set API Token Bearer (prop: api_token), only if you need it.
+- [x] Set API resource id to related image (prop: api_id), only if you need it.
+- [x] Set image name for alt and title (prop: name), optional.
+- [x] Upload to API → Experimental, for debug.
+- [x] Set enable API upload
 - [ ] Set Lazy Image path
-- [ ] Upload to API
-- [ ] Set enable API upload
 
 ## Plain Html Project
 
