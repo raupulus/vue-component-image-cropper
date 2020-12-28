@@ -257,31 +257,23 @@
         let id = this.api_id;
 
         this.loading = true;
-        
-        /*      
 
-        getPost(this.api_url, (error, response) => {
-          if (error) {
-            console.log('Ha ocurrido un error en la subida a la API');
-            console.log(error.toString());
-          } else {
-            console.log('La subida a la API fue correcta. Respuesta:');
-            console.log(response);
-          }
-        });  
-        */
+        let params = {
+          image: this.resultURL,
+          id: id
+        };
+
+        if (token) {
+          params.headers = {
+            //'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+          };
+        }
 
 
         this.axios.post(
             url,
-            {
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
-              },
-              image: this.resultURL,
-              id: id
-            }
+            params
         ).then(response => {
           if (response.data.error) {
             console.log('Ha ocurrido un error en la subida a la API');
