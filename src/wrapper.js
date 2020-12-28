@@ -2,6 +2,8 @@ import CropperModal from './components/CropperModal.vue';
 import CropperImage from './components/CropperImage.vue';
 import VueRx from 'vue-rx'
 import VuejsClipper from 'vuejs-clipper'
+import axios from 'axios';
+import VueAxios from 'vue-axios';
 
 // Declare install function executed by Vue.use()
 export function install(Vue) {
@@ -15,6 +17,8 @@ export function install(Vue) {
 const plugin = {
   install,
   VueRx,
+  VueAxios, 
+  axios
 };
 
 // Auto-install when vue is found (eg. in browser via <script> tag)

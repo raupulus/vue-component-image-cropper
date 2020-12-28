@@ -11,6 +11,7 @@
       >
         <img :src="image.src"
             :alt="image.name" 
+            :data-id="image.id"
             class="mx-auto bg-black border-2 border-black shadow-md"
             :style="rounded ? 'border-radius: 50%;' : ''"
             :width="preview_width"
@@ -34,8 +35,10 @@
       v-on:modal_cropper_update_data="onChangeModalCropperData"
       :originalImage="image.src"
       :originalLazy="image.lazy"
-      :has_api="api.has_api"
+      :has_upload="api.has_upload"
       :api_url="api.url"
+      :api_token="api.token"
+      :api_id="api.id"
       :ratio="aspect_ratio"
       :width="width"
       ></v-image-cropper-modal>
@@ -86,6 +89,24 @@ export default {
       default: null
     },
 
+    // Token Bearer para conectar a la api
+    api_token: {
+      required: false,
+      default: null
+    },
+
+    // Id para relacionarlo en el backend de la api (usuario, slide, post...).
+    api_id: {
+      required: false,
+      default: 0
+    },
+
+    // Nombre para ser usado de alt y quizá de previsualización en el futuro
+    name: {
+      required: false,
+      default: ''
+    },
+
     // El ancho en píxeles para la imagen resultante.
     width: {
       required: false,
@@ -112,6 +133,10 @@ export default {
       this.image.src = this.image_path;
     }
 
+    if (this.name) {
+      this.image.src = this.name;
+    }
+
     if (this.image_lazy_path) {
       this.image.lazy = this.image_lazy_path;
     }
@@ -119,6 +144,8 @@ export default {
     if (this.api_url) {
       this.api.has_upload = true;
       this.api.url = this.api_url;
+      this.api.token = this.api_token;
+      this.api.id = this.id;
     }
   },
   mounted() {
@@ -141,6 +168,8 @@ export default {
       api: {
         has_upload: false,
         url: null,
+        token: null,
+        id: null,
       }
     }
   },

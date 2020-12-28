@@ -9,6 +9,9 @@ import store from './store'
 // Importo componentes de forma global
 
 import VueRx from 'vue-rx'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
 //import VuejsClipper from 'vuejs-clipper'
 /*
 import {
@@ -38,6 +41,7 @@ Vue.component("clipper-range", clipperRange);
 */
 
 Vue.use(VueRx);
+Vue.use(VueAxios, axios);
 
 /*
 Vue.use(VuejsClipper, {

@@ -192,7 +192,7 @@
       },
 
       // Indica si se subirá a una api.
-      has_api: {
+      has_upload: {
         type: Boolean,
         required: false,
         default: false
@@ -203,10 +203,24 @@
         type: String,
         required: false,
         default: null
-      }
+      },
+
+      // Token Bearer para conectar a la api
+      api_token: {
+        type: String,
+        required: false,
+        default: null
+      },
+
+      // Id para relacionarlo en el backend de la api (usuario, slide, post...).
+      api_id: {
+        required: false,
+        default: null
+      },
     },
     data () {
       return {
+        loading: false, // Indica si está subiendo la imagen por ajax
         current_step: 1, // Almacena el paso del menú actual.
         showErrors: false, // Indica si muestra errores
         selectImage: '',  // Imagen seleccionada.
@@ -236,22 +250,51 @@
       },
 
       uploadImageToApi: function() {
-          console.log('uploadImage');
+        console.log('uploadImage');
+
+        let url = this.api_url;
+        let token = this.api_token;
+        let id = this.api_id;
+
+        this.loading = true;
+        
         /*      
 
-          axios.post(
-              '/panel/user/ajax/avatar/upload',
-              {
-                  image: this.resultURL,
-                  user_id: this.user_id
-              }
-          ).then(response => {
-              if (!response.data.error) {
-                  console.log(response);
-                  this.imgOriginal = response.data.data.new_image;
-              }
-          });
+        getPost(this.api_url, (error, response) => {
+          if (error) {
+            console.log('Ha ocurrido un error en la subida a la API');
+            console.log(error.toString());
+          } else {
+            console.log('La subida a la API fue correcta. Respuesta:');
+            console.log(response);
+          }
+        });  
         */
+
+
+        this.axios.post(
+            url,
+            {
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+              },
+              image: this.resultURL,
+              user_id: id
+            }
+        ).then(response => {
+          if (response.data.error) {
+            console.log('Ha ocurrido un error en la subida a la API');
+            console.log(response.data.error.toString());
+          } else {
+            console.log('La subida a la API fue correcta. Respuesta:');
+            console.log(response);
+            this.originalImage = response.data.data.new_image;
+          }
+        });
+
+
+        this.loading = false;
       },
 
       /**
@@ -277,7 +320,7 @@
         console.log(this.selectImage);
 
         // Inicia la subida al servidor en caso de que proceda.
-        if (this.has_api) {
+        if (this.has_upload) {
           this.uploadImageToApi();
         }
 
