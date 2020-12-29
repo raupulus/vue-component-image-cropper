@@ -40,6 +40,10 @@ Además permite almacenar el resultado en base64 dentro de un input con el nombr
 - [ ] Spinner while uploading the image
 - [ ] Set Lazy Image path
 
+## Dependencies
+
+- axios & axios-vue
+
 ## Plain Html Project
 
 ```html
