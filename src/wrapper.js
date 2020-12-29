@@ -17,8 +17,7 @@ export function install(Vue) {
 const plugin = {
   install,
   VueRx,
-  VueAxios, 
-  axios
+  VueAxios,
 };
 
 // Auto-install when vue is found (eg. in browser via <script> tag)

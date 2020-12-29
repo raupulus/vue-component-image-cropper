@@ -19,7 +19,7 @@
         />
       </div>
 
-      <div class="v-component-image-cropper-button-open-modal -mt-12 cursor-pointer center">
+      <div class="v-component-image-cropper-button-open-modal -mt-12 cursor-pointer center rounded-full">
           <svg class="icon-open-modal svg-icon cursor-pointer transition transition-delay-1000 rounded rounded-full ease" 
                viewBox="0 0 16 16"
                @click="toggleModal"
@@ -36,10 +36,9 @@
       v-on:modal_cropper_update_data="onChangeModalCropperData"
       :originalImage="image.src"
       :originalLazy="image.lazy"
-      :has_upload="api.has_upload"
-      :api_url="api.url"
-      :api_token="api.token"
-      :api_id="api.id"
+      :api_url="api_url"
+      :api_token="api_token"
+      :api_id="api_id"
       :csrf_token="csrf_token"
       :ratio="aspect_ratio"
       :width="width"
@@ -148,13 +147,6 @@ export default {
     if (this.image_lazy_path) {
       this.image.lazy = this.image_lazy_path;
     }
-
-    if (this.api_url) {
-      this.api.has_upload = true;
-      this.api.url = this.api_url;
-      this.api.token = this.api_token;
-      this.api.id = this.id;
-    }
   },
   mounted() {
     console.log('Component mounted');
@@ -173,12 +165,6 @@ export default {
         lazy: require('../assets/default_lazy.png'),
         src: require('../assets/default_800x600.png')
       },
-      api: {
-        has_upload: false,
-        url: null,
-        token: null,
-        id: null,
-      }
     }
   },
   methods: {
@@ -223,6 +209,7 @@ export default {
 <style lang="scss" scoped>
 @import '../assets/tailwind.css';
 
+
 .v-component-image-cropper {
   margin: auto;
   text-align: center;
@@ -261,6 +248,6 @@ export default {
 }
 
 .rounded-full {
-  border-radius: 9999px;
+  border-radius: 9999px !important;
 }
 </style>

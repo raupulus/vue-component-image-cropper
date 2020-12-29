@@ -191,13 +191,6 @@
         default: false
       },
 
-      // Indica si se subirá a una api.
-      has_upload: {
-        type: Boolean,
-        required: false,
-        default: false
-      },
-
       // Contiene la dirección de la api.
       api_url: {
         type: String,
@@ -256,31 +249,36 @@
       },
 
       uploadImageToApi: function() {
-        console.log('uploadImage');
+        console.log('Inicia subida en método: uploadImageToApi()');
 
         let url = this.api_url;
         let token = this.api_token;
         let id = this.api_id;
         let csrf_token = this.csrf_token;
 
+        console.log('token: ' + token);
+        console.log('id: ' + id);
+        console.log('resultImage: ' + this.resultImage);
+
         this.loading = true;
 
         let params = {
-          image: this.resultURL,
-          id: id
+          id: id,
+          name: this.name,
+          image: this.resultImage,
+        };
+
+        params.headers = {
+          'Content-Type': 'application/json',
         };
 
         if (token) {
-          params.headers = {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
-          };
+          params.headers['Authorization'] = token;
         }
 
         if (csrf_token) {
           params.headers['X-CSRF-TOKEN'] = csrf_token;
         }
-
 
         this.axios.post(
             url,
@@ -292,10 +290,9 @@
           } else {
             console.log('La subida a la API fue correcta. Respuesta:');
             console.log(response);
-            this.originalImage = response.data.data.new_image;
+            //this.resultImage = response.data.data.new_image;
           }
         });
-
 
         this.loading = false;
       },
@@ -323,7 +320,7 @@
         console.log(this.selectImage);
 
         // Inicia la subida al servidor en caso de que proceda.
-        if (this.has_upload) {
+        if (this.api_url) {
           this.uploadImageToApi();
         }
 
@@ -334,6 +331,7 @@
        * Cuando se carga correctamente la imagen.
        */
       load() {
+        console.log('Entra en load');
         // Lleva al segundo paso.
         this.current_step = 2;
         this.showErrors = false;
@@ -343,7 +341,8 @@
        * Cuando no se carga la imagen o es otro tipo de archivo.
        */
       error() {
-          this.showErrors = true;  
+        console.log('Error al seleccionar imagen: error()');
+        this.showErrors = true;  
       },
    },
   }
@@ -364,8 +363,6 @@
   .my-clipper {
     max-width: 300px;
   }
-
-  
 </style>
 
 <style lang="scss">
